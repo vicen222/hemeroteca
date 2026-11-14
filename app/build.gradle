@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
 }
 
+def runNumber = (System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInteger()
+
 android {
     namespace 'com.vicente.hemeroteca'
     compileSdk 34
@@ -10,13 +12,23 @@ android {
         applicationId "com.vicente.hemeroteca"
         minSdk 26
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode runNumber + 1
+        versionName "1.0.${runNumber}"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("release.jks")
+            storePassword System.getenv("KEYSTORE_PASS")
+            keyAlias "hemeroteca"
+            keyPassword System.getenv("KEYSTORE_PASS")
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
         }
     }
 
