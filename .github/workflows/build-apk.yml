@@ -23,11 +23,18 @@ jobs:
         with:
           gradle-version: '8.9'
 
+      - name: Preparar firma
+        env:
+          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
+        run: echo "$KEYSTORE_B64" | base64 -d > app/release.jks
+
       - name: Compilar
-        run: gradle assembleDebug --no-daemon
+        env:
+          KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
+        run: gradle assembleRelease --no-daemon
 
       - name: Renombrar APK
-        run: cp app/build/outputs/apk/debug/app-debug.apk Hemeroteca.apk
+        run: cp app/build/outputs/apk/release/app-release.apk Hemeroteca.apk
 
       - name: Publicar descarga
         env:
@@ -36,5 +43,5 @@ jobs:
           TAG="v1.0.${{ github.run_number }}"
           gh release create "$TAG" Hemeroteca.apk \
             --title "Hemeroteca $TAG" \
-            --notes "Descarga Hemeroteca.apk desde el móvil e instálala." \
+            --notes "Descarga Hemeroteca.apk desde el móvil e instálala encima de la anterior." \
             --latest
