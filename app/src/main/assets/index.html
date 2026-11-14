@@ -599,7 +599,7 @@ const st={tab:'fuerza',grp:'Pierna',accZ:'Todos',cat:'todos',fmt:'todos',dur:'to
 try{const s=JSON.parse(localStorage.getItem('hem-rm')||'{}');st.rm=s||{}}catch(e){}
 const saveRM=()=>{try{localStorage.setItem('hem-rm',JSON.stringify(st.rm))}catch(e){}};
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||'null')||d}catch(e){return d}};
-st.log=load('hem-log',[]);st.custom=load('hem-custom',[]);st.piz={status:'',err:false,fuerza:'',wod:'',name:'',fecha:''};st.pizF='';st.pizOnly=false;st.delW=null;
+st.log=load('hem-log',[]);st.custom=load('hem-custom',[]);st.piz={status:'',err:false,fuerza:'',wod:'',acc:'',name:'',fecha:''};st.pizF='';st.pizAcc='';st.pizOnly=false;st.delW=null;
 const saveCustom=()=>{try{localStorage.setItem('hem-custom',JSON.stringify(st.custom))}catch(e){}};
 st.custom.forEach(c=>W.unshift(tagW({...c})));st.rmh=load('hem-rmh',[]);st.flash='';st.del=null;
 const saveLog=()=>{try{localStorage.setItem('hem-log',JSON.stringify(st.log));localStorage.setItem('hem-rmh',JSON.stringify(st.rmh))}catch(e){}};
@@ -665,6 +665,7 @@ function wodCard(w,inSession){
    <div class="meta"><span class="pill cat">${CATS[w.cat]}</span>${w.piz?'<span class="pill pz">Pizarra</span>':''}${w.v?'<span class="pill">Chaleco</span>':''}<span class="pill">${esc(w.f)}</span>${warn}</div></div>
    <div class="dur"><b>${w.min}'</b><span>${w.fmt}</span></div></div>
    ${w.fuerza?`<div class="pzF"><b>Fuerza de ese día</b>${esc(w.fuerza)}</div>`:''}
+   ${w.acc?`<div class="pzF"><b>Superserie de ese día</b>${esc(w.acc)}</div>`:''}
    <ul class="moves">${w.lines.map(l=>`<li class="${/:$/.test(l)?'sub':''}">${esc(l)}</li>`).join('')}</ul>
    ${w.piz&&!inSession?(st.delW===w.id?`<div class="foot" style="justify-content:flex-start;gap:12px"><span class="count" style="margin:0">¿Borrar esta pizarra?</span><button class="x danger" data-delwok="${w.id}">Sí, borrar</button><button class="x" data-delwno="1">No</button></div>`:`<button class="x" data-delw="${w.id}">Borrar de la hemeroteca</button>`):''}
    ${(w.rx||!inSession)?`<div class="foot">${w.rx?`<div class="rx"><b>Rx</b>${esc(w.rx)}</div>`:'<span></span>'}${inSession?'':`<button class="btn pick ${on?'solid':''}" data-wod="${w.id}">${on?'Quitar':'Elegir'}</button>`}</div>`:''}</article>`;
@@ -701,12 +702,12 @@ function vSesion(){
   const ws=st.wods.map(id=>W.find(x=>x.id===id));
   const minutes=ws.reduce((s,w)=>s+w.min,0);
   const warn=heavyStrength()&&ws.some(w=>w.hinge&&w.cat!=='core');
-  const empty=!st.fuerza.length&&!a&&!ws.length&&!st.pizF;
+  const empty=!st.fuerza.length&&!a&&!ws.length&&!st.pizF&&!st.pizAcc;
   return `<h2>Tu sesión</h2>
   ${empty?'<p class="hint">Todavía no has elegido nada. Empieza por Fuerza, haz una foto a la pizarra o pulsa Sorpréndeme.</p>':`<div class="total"><b>${st.fuerza.length*12+(a?10:0)+minutes}'</b><span>aprox., sin contar el calentamiento</span></div>`}
   <div class="summary">
    <section class="sheet block"><h3><b>1</b>Fuerza</h3>${fz}${st.pizF?`<div class="row"><div><b>De la pizarra</b><div class="sets" style="white-space:pre-line">${esc(st.pizF)}</div></div><button class="x" data-rmpiz="1">Quitar</button></div>`:''}${fz||st.pizF?'':'<p class="empty">Sin fuerza elegida.</p>'}</section>
-   <section class="sheet block"><h3><b>2</b>Superserie</h3>${a?`<div class="row"><div><b>${esc(a.n)}</b><div class="sets">${esc(a.r)}</div></div><button class="x" data-rmacc="1">Quitar</button></div>`:'<p class="empty">Sin accesorio.</p>'}</section>
+   <section class="sheet block"><h3><b>2</b>Superserie</h3>${a?`<div class="row"><div><b>${esc(a.n)}</b><div class="sets">${esc(a.r)}</div></div><button class="x" data-rmacc="1">Quitar</button></div>`:''}${st.pizAcc?(()=>{const p=accFromText(st.pizAcc);return `<div class="row"><div><b>${esc(p.n)}</b><div class="sets">${esc(p.r||'De la pizarra')}</div></div><button class="x" data-rmpacc="1">Quitar</button></div>`})():''}${a||st.pizAcc?'':'<p class="empty">Sin accesorio.</p>'}</section>
    <section class="block"><h3><b>3</b>WOD</h3>${ws.length?ws.map(w=>wodCard(w,true)+`<button class="x" data-wod="${w.id}">Quitar este WOD</button>`).join(''):'<p class="empty">Sin WOD elegido.</p>'}</section>
    ${warn?'<p class="note">La fuerza de hoy ya carga la bisagra (clean, complex o peso muerto) y el WOD vuelve a tener peso muerto, clean o swing. Baja algo el peso del WOD o cambia a uno de gimnásticos o motor.</p>':''}
    ${empty?'':`<div class="toolbar"><button class="btn solid" id="logStart" type="button">Registrar entreno</button><button class="btn" id="copy" type="button">Copiar sesión</button><button class="btn" id="reset" type="button">Empezar de nuevo</button><span class="count" id="copyMsg"></span></div>
@@ -717,29 +718,96 @@ function vSesion(){
 /* ---------- pizarra ---------- */
 const WOD_RE=/\b(amrap|emom|for\s*time|rounds?|rondas?|tc|t\.c\.?|tabata|chipper|wod|hero)\b/i;
 const DAY_RE=/\b(lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo)\b|\b\d{1,2}\s*[-\/.]\s*\d{1,2}\s*[-\/.]\s*\d{2,4}\b/i;
-function cleanLine(s){return s.replace(/\s+/g,' ').replace(/(\d)\s*[xX×*]\s*(\d)/g,'$1×$2').replace(/\bkb\b/gi,'KB').replace(/\bdb\b/gi,'DB').replace(/\brx\b/gi,'Rx').trim()}
+const DICT=('RUN RUNS REVERSE LUNGES LUNGE LAT BOX STEP STEPS JUMP JUMPS MED BALL SIT UP UPS PULL PUSH CHIN HANG SQUAT CLEAN POWER FRONT BACK DEADLIFT '+
+ 'JERK SNATCH PRESS THRUSTER THRUSTERS BURPEE BURPEES WALL ROW ROWS SUPINED SUPINE GORILLA DOUBLE HAMMER CURL EXT OVER HEAD HEAT FRANCES DIPS RING SWING '+
+ 'KB DB T2B C2B AMRAP EMOM FOR TIME ROUNDS ROUND RONDAS REST SUPER SET TRI CRUNCH HOLLOW PLANK CLIMBERS MOUNTAIN DU CHALECO VEST WEAR SUMO HIGH '+
+ 'GOBLET GLOBET ZERCHER LANDMINE COMPLEX BENT LEG LIFTS LIFT TWIST CARRY PARALELA FINAL CALLE ELV LAT ELEVACIONES SKULL DIAMOND INCLINE DECLINE INCL DEC '+
+ 'MUSCLE ROPE CLIMB SPLIT BULGARA ABDUCCION SPARTAN HOLD ISO CLUSTER DEVIL ALT SINGLE UNDERS PLATE PLYO JACKS FLOOR KETTLEBELL DUMBBELL BAR BARRA '+
+ 'SALTO CUERDA REMO BIKE SKI ERG MILE MILLA STRICT KIPPING TOES TO STRENGTH SKILL WOD HERO CAP TC RX ESCALADO CURL CUP GROUND OVERHEAD').split(' ');
+const DSET=new Set(DICT);
+const DIG2L={'0':'O','1':'I','2':'L','5':'S','8':'B','6':'G','4':'A','7':'T'};
+function lev1(a,b){if(Math.abs(a.length-b.length)>1)return false;let i=0,j=0,e=0;
+  while(i<a.length&&j<b.length){if(a[i]===b[j]){i++;j++;continue}if(++e>1)return false;
+    if(a.length>b.length)i++;else if(a.length<b.length)j++;else{i++;j++}}
+  return e+(a.length-i)+(b.length-j)<=1}
+function fixWord(w){
+  const up=w.toUpperCase();if(DSET.has(up)&&w!==up&&w.slice(1)===w.slice(1).toUpperCase())return up;
+  if(!/^[A-ZÁÉÍÓÚÑ]+$/.test(up)||DSET.has(up)||up.length<3)return w;
+  const c=DICT.filter(d=>d.length>=3&&(up.length>=4?lev1(up,d):(d.length===up.length&&lev1(up,d))));
+  if(c.length!==1)return w;
+  return w===w.toUpperCase()?c[0]:c[0].charAt(0)+c[0].slice(1).toLowerCase();
+}
+function cleanLine(s){
+  s=s.replace(/\s+/g,' ').trim();
+  s=s.replace(/^["“”'´`]+|["“”'´`]+$/g,'').trim();                                   // comillas sueltas
+  s=s.replace(/^([*•·\-]?\s*)(\d)\s*[.,]\s*(\d)(?=\s*[-·.:]?\s*\d{2,3}\s*[%\/])/,'$1$2×$3'); // 3.2-80% → 3×2-80%
+  s=s.replace(/(\d)\s*[xX×*]\s*(\d)/g,'$1×$2');
+  s=s.replace(/(\d{2,3})\s*\/\s*\.?(?=\s|$)/g,'$1%');                                 // 80/ → 80%
+  s=s.replace(/(\d{2,3})\s*%\s*\./g,'$1%');
+  s=s.replace(/^(\d+)(\d)([A-Za-z]{2,})/,(m,a,d,w)=>{const cand=(DIG2L[d]||'')+w.toUpperCase();return DSET.has(cand)?a+' '+(w===w.toUpperCase()?cand:cand.toLowerCase()):m});
+  s=s.replace(/^(\d+)([A-Za-z])/,'$1 $2');                                            // 200RUN → 200 RUN
+  s=s.replace(/[A-Za-zÁÉÍÓÚÑáéíóúñ]+/g,fixWord);
+  s=s.replace(/\bkb\b/gi,'KB').replace(/\bdb\b/gi,'DB').replace(/\brx\b/gi,'Rx').replace(/\bt2b\b/gi,'T2B');
+  return s.trim();
+}
+const isNumOnly=s=>/^[\d\s\/.,]*(kg|kgs|lb)?\s*$/i.test(s)&&/\d/.test(s)&&s.replace(/\s/g,'').length<=8;
+function liftIdx(s){const i=LIFT_KEYS.findIndex(([,re])=>re.test(s));return i<0?99:i}
+function mergeBroken(arr){
+  const out=[];
+  for(let i=0;i<arr.length;i++){const a=arr[i],b=arr[i+1];
+    if(b&&!/\d/.test(a)&&!/\d/.test(b)&&!/^[-*•·]/.test(b)&&b.split(' ').length<=2&&liftIdx(a+' '+b)<liftIdx(a)){out.push(a+' '+b);i++}
+    else out.push(a)}
+  return out;
+}
+function attachNumbers(lines){
+  // lines: [{t,cy}] ya limpias; los números sueltos se pegan a la línea más cercana en vertical
+  const keep=lines.filter(l=>!isNumOnly(l.t)),nums=lines.filter(l=>isNumOnly(l.t));
+  nums.forEach(n=>{if(!keep.length)return;let best=keep[0];keep.forEach(k=>{if(Math.abs(k.cy-n.cy)<Math.abs(best.cy-n.cy))best=k});
+    best.t+=' · '+n.t+' (¿peso? revisa)'});
+  return keep.map(l=>l.t);
+}
+function splitAcc(fz){
+  const i=fz.findIndex(s=>/super\s*set|tri\s*set|superserie/i.test(s));
+  if(i<0)return {fz,acc:[]};
+  let j=fz.findIndex((s,k)=>k>i&&/^\s*[*•]/.test(s)&&!/super\s*set/i.test(s));if(j<0)j=fz.length;
+  return {fz:fz.slice(0,i).concat(fz.slice(j)),acc:fz.slice(i+1,j)};
+}
+function accFromText(txt){
+  const L=(txt||'').split('\n').map(s=>s.trim()).filter(Boolean);if(!L.length)return null;
+  const ex=L.filter(s=>/[A-Za-z]{3,}/.test(s)).map(s=>s.replace(/^[-*•·\s]+/,'').replace(/\s*\d+(-\d+)+\s*$/,'')).map(s=>s.charAt(0).toUpperCase()+s.slice(1).toLowerCase());
+  const sch=L.map(s=>(s.match(/\d+(?:\s*[-x×]\s*\d+)+/)||[''])[0]).filter(Boolean);
+  return {n:ex.join(' + ')||L.join(' '),r:[...new Set(sch)].join(' / ')};
+}
 function parsePizarra(o){
   let L=(o.lines||[]).filter(l=>l.t&&l.t.trim());
-  if(!L.length)return {fuerza:'',wod:'',name:''};
+  if(!L.length)return {fuerza:'',wod:'',acc:'',name:''};
   const hasBox=L.every(l=>l.x!=null);let left=L,right=[];
   if(hasBox){const xs=L.map(l=>l.x),mn=Math.min(...xs),mx=Math.max(...L.map(l=>l.r));const mid=(mn+mx)/2;
     const lf=L.filter(l=>(l.x+l.r)/2<mid),rt=L.filter(l=>(l.x+l.r)/2>=mid);
     const gap=Math.min(...rt.map(l=>l.x))-Math.max(...lf.map(l=>l.r));
     if(lf.length>=2&&rt.length>=2&&gap>-(mx-mn)*0.05){left=lf;right=rt}}
-  const byY=a=>[...a].sort((p,q)=>(p.y||0)-(q.y||0)).map(l=>cleanLine(l.t)).filter(Boolean);
-  left=byY(left);right=byY(right);
+  const byY=a=>attachNumbers([...a].sort((p,q)=>(p.y||0)-(q.y||0)).map(l=>({t:cleanLine(l.t),cy:((l.y||0)+(l.b||l.y||0))/2})).filter(l=>l.t));
+  left=mergeBroken(byY(left));right=mergeBroken(byY(right));
   let name='';const pull=arr=>{for(let i=0;i<Math.min(2,arr.length);i++){if(DAY_RE.test(arr[i])){name=name||arr[i];arr.splice(i,1);i--}}};pull(left);pull(right);
   let fz=[],wd=[];
   if(right.length){const lw=left.findIndex(s=>WOD_RE.test(s)&&!/%/.test(s));
     if(lw===0){wd=[...left,...right]}else{fz=left;wd=right}}
   else{const k=left.findIndex(s=>WOD_RE.test(s)&&!/%/.test(s));if(k>0){fz=left.slice(0,k);wd=left.slice(k)}else{wd=left}}
-  return {fuerza:fz.join('\n'),wod:wd.join('\n'),name};
+  const sp=splitAcc(fz);
+  return {fuerza:sp.fz.join('\n'),acc:sp.acc.join('\n'),wod:wd.join('\n'),name};
 }
 function wodMeta(txt){
   const all=txt.replace(/\n/g,' ');const t=all.toLowerCase();
   const fmt=/amrap/.test(t)?'AMRAP':/emom/.test(t)?'EMOM':/for\s*time/.test(t)?'For Time':'Rondas';
-  const m=all.match(/(?:amrap|emom|t\.?c\.?|for\s*time)\D{0,4}(\d{1,2})/i)||all.match(/(\d{1,2})\s*['’´]/);
-  const min=m?+m[1]:12;
+  const LS=txt.split('\n');let min=null,est=false;
+  const tc=all.match(/\bt\.?\s?c\.?\s*(\d{1,2})\b|time\s*cap\s*(\d{1,2})/i);if(tc)min=+(tc[1]||tc[2]);
+  if(!min)for(const l of LS){const m=l.match(/(?:amrap|emom|for\s*time)\D{0,3}(\d{1,2})(?!\d)/i)||l.match(/\b(\d{1,2})\s*['’´]/);if(m){min=+m[1];break}}
+  if(!min&&!/amrap|emom/.test(t)){
+    const rf=+((all.match(/(\d+)\s*(rounds?|rondas?)/i)||[])[1]||1);let mts=0,reps=0;
+    LS.forEach(l=>{const r=l.match(/^\s*(\d{3,4})\s*m?\s*(run|remo|row|carry)/i);if(r){mts+=+r[1];return}
+      const q=l.match(/^\s*(\d{1,3})\s+[A-Za-z]/);if(q)reps+=+q[1]});
+    if(mts||reps){min=Math.max(5,Math.round((mts/1000*5.5+reps*5/60)*rf));est=true}}
+  min=min||12;
   const cnt=re=>(t.match(re)||[]).length;
   const s={cardio:cnt(/\brun\b|\bdu\b|burpee|wall ?ball|box jump|\brow\b|remo|bike|climbers|step/g),
     fuerza:cnt(/clean|deadlift|squat|press|snatch|thruster|jerk|\d{2}\s*-\s*\d{2}/g),
@@ -747,13 +815,13 @@ function wodMeta(txt){
   let cat='mixto';const best=Object.entries(s).sort((a,b)=>b[1]-a[1]);
   if(best[0][1]>0&&best[0][1]>=best[1][1]+2)cat=best[0][0];
   if(/crunch|sit ?up|hollow|plank|v-?ups|leg (lift|raise)/.test(t)&&!s.fuerza&&!s.cardio)cat='core';
-  return {fmt,min,cat,v:/chaleco|vest/i.test(all)};
+  return {fmt,min,est,cat,v:/chaleco|vest/i.test(all)};
 }
 const LIFT_KEYS=[['hsc',/hang\s*squat\s*clean|h\.?\s*s\.?\s*clean/i],['sqc',/squat\s*clean/i],['cp',/clean\s*pull|c\.\s*pull/i],['cj',/\bc\s*[-&.]\s*j\b|clean\s*(and|&|y)\s*jerk/i],['pc',/power\s*clean|p\.?\s*clean/i],['hc',/hang\s*clean/i],['cx2',/complex\s*\.?\s*2/i],['cx1',/complex/i],['fsq',/front\s*squat|f\.\s*squat/i],['zer',/zercher/i],['dl',/dead\s*lift/i],['pu',/pull\s*up/i],['dip',/\bdips?\b/i],['bsq',/back\s*squat|\bsquat\b/i]];
 function pizLifts(txt){
   if(!txt||!txt.trim())return [];
   const lifts=allLifts();const out=[];let cur=null;
-  const LN=txt.split('\n').map(s=>s.trim()).filter(Boolean);
+  const LN=mergeBroken(txt.split('\n').map(s=>s.trim()).filter(Boolean));
   const strong=l=>/%|\bRM\b|^\s*[*•·]|\b\d+-\d+-\d+\b/i.test(l);
   const anyStrong=LN.some(l=>strong(l)&&LIFT_KEYS.some(([,re])=>re.test(l)));
   LN.forEach(line=>{
@@ -763,7 +831,7 @@ function pizLifts(txt){
     else if(cur)cur.txt.push(line);
   });
   out.forEach(o=>{const s=o.txt.join(' ');o.esquema=s;const rows=[];
-    s.replace(/(\d+)\s*×\s*(\d+)(?:\s*@?\s*(\d{2,3})\s*%)?/g,(_,a,b,p)=>{for(let i=0;i<+a&&rows.length<12;i++)rows.push({reps:+b,pct:p?+p:null});return _});
+    s.replace(/(\d+)\s*×\s*(\d+)(?:\s*[-·.:@]?\s*(\d{2,3})\s*%)?/g,(_,a,b,p)=>{for(let i=0;i<+a&&rows.length<12;i++)rows.push({reps:+b,pct:p?+p:null});return _});
     if(!rows.length){const m=s.match(/\b(\d+(?:-\d+){2,})\b/);if(m)m[1].split('-').forEach(r=>rows.push({reps:+r,pct:null}))}
     o.rows=rows.length?rows:[1,2,3].map(()=>({reps:'',pct:null}))});
   if(!out.length)out.push({id:'otro',n:'Fuerza de la pizarra',esquema:txt.replace(/\n/g,' · '),fase:'Pizarra',rows:[1,2,3,4,5].map(()=>({reps:'',pct:null}))});
@@ -777,7 +845,7 @@ function sessionLifts(){
 window.onPizarra=function(o){
   try{if(window.Android&&Android.takePending)Android.takePending()}catch(e){}
   const p=parsePizarra(o);
-  st.piz.fuerza=p.fuerza;st.piz.wod=p.wod;
+  st.piz.fuerza=p.fuerza;st.piz.wod=p.wod;st.piz.acc=p.acc||'';
   const dm=(p.name||'').match(/(\d{1,2})\s*[-\/.]\s*(\d{1,2})\s*[-\/.]\s*(\d{2,4})/);
   if(dm){const y=dm[3].length===2?'20'+dm[3]:dm[3];st.piz.fecha=y+'-'+dm[2].padStart(2,'0')+'-'+dm[1].padStart(2,'0')}
   const n=(o.lines||[]).length;
@@ -800,18 +868,20 @@ function vPizarra(){
    <div class="two" style="grid-template-columns:1fr 150px">
     <label class="lbl" for="pzN">Nombre (opcional)<input class="field" id="pzN" value="${esc(st.piz.name)}" placeholder="Ej.: Kratos, WOD del lunes"></label>
     <label class="lbl" for="pzD">Fecha<input class="field" type="date" id="pzD" value="${esc(st.piz.fecha)}"></label></div>
-   <label class="lbl" for="pzF">Fuerza<textarea class="field" id="pzF" placeholder="Ej.:
+   <label class="lbl" for="pzF">Fuerza<textarea class="field" id="pzF" style="min-height:${Math.max(120,(st.piz.fuerza.split('\n').length+1)*23)}px" placeholder="Ej.:
 SQUAT CLEAN 5×2 85%
 DIPS 5×5 77%">${esc(st.piz.fuerza)}</textarea></label>
    ${lifts.length&&st.piz.fuerza.trim()?`<div class="det">Reconocido: ${lifts.map(l=>`<span><b>${esc(l.n)}</b> · ${l.rows.length} series</span>`).join('')}</div>`:''}
-   <label class="lbl" for="pzW">WOD<textarea class="field" id="pzW" style="min-height:180px" placeholder="Ej.:
+   <label class="lbl" for="pzA">Superserie / accesorio<textarea class="field" id="pzA" style="min-height:80px" placeholder="Ej.:\n-SUPINED ROW\n12-10-8\n-CURL HAMMER">${esc(st.piz.acc)}</textarea></label>
+   ${st.piz.acc.trim()?(()=>{const a=accFromText(st.piz.acc);return `<div class="det">Reconocido: <span><b>${esc(a.n)}</b>${a.r?' · '+esc(a.r):''}</span></div>`})():''}
+   <label class="lbl" for="pzW">WOD<textarea class="field" id="pzW" style="min-height:${Math.max(180,(st.piz.wod.split('\n').length+1)*23)}px" placeholder="Ej.:
 AMRAP 12'
 7-10 PULL UP
 3 SQUAT CLEAN
 10 WALL BALL
 Rx 70-45">${esc(st.piz.wod)}</textarea></label>
-   ${meta?`<div class="det"><span>Formato: <b>${meta.fmt}</b></span><span>Duración: <b>${meta.min}'</b></span><span>Tipo: <b>${CATS[meta.cat]}</b></span>${meta.v?'<span><b>Con chaleco</b></span>':''}</div>`:''}
-   <div class="toolbar"><button class="btn solid" id="pzUse" type="button" ${st.piz.wod.trim()||st.piz.fuerza.trim()?'':'disabled'}>Guardar y entrenar hoy</button><button class="btn" id="pzSave" type="button" ${st.piz.wod.trim()?'':'disabled'}>Solo guardar</button><button class="x" id="pzClear" type="button">Vaciar</button></div>
+   ${meta?`<div class="det"><span>Formato: <b>${meta.fmt}</b></span><span>Duración: <b>${meta.est?'≈ ':''}${meta.min}'</b>${meta.est?' (estimada)':''}</span><span>Tipo: <b>${CATS[meta.cat]}</b></span>${meta.v?'<span><b>Con chaleco</b></span>':''}</div>`:''}
+   <div class="toolbar"><button class="btn solid" id="pzUse" type="button" ${st.piz.wod.trim()||st.piz.fuerza.trim()||st.piz.acc.trim()?'':'disabled'}>Guardar y entrenar hoy</button><button class="btn" id="pzSave" type="button" ${st.piz.wod.trim()?'':'disabled'}>Solo guardar</button><button class="x" id="pzClear" type="button">Vaciar</button></div>
   </div>`;
 }
 function savePizarra(){
@@ -821,7 +891,7 @@ function savePizarra(){
   if(!body.length)return null;
   const meta=wodMeta(st.piz.wod);const d=st.piz.fecha||today();
   const f=d.split('-').reverse().map((x,i)=>i===2?x.slice(2):x).join('-');
-  const c={id:'c'+Date.now(),n:st.piz.name.trim()||'Pizarra '+f,f,fmt:meta.fmt,min:meta.min,cat:meta.cat,v:meta.v,named:!!st.piz.name.trim(),lines:body,rx,piz:true,fuerza:st.piz.fuerza.trim()};
+  const c={id:'c'+Date.now(),n:st.piz.name.trim()||'Pizarra '+f,f,fmt:meta.fmt,min:meta.min,cat:meta.cat,v:meta.v,named:!!st.piz.name.trim(),lines:body,rx,piz:true,fuerza:st.piz.fuerza.trim(),acc:st.piz.acc.trim()};
   st.custom.unshift(c);saveCustom();W.unshift(tagW({...c}));return c;
 }
 function expand(sc){
@@ -832,7 +902,7 @@ function expand(sc){
 }
 function vRegistrar(){
   const items=sessionLifts();
-  if(!items.length&&st.acc===null&&!st.wods.length) return `<h2>Registrar entreno</h2><p class="hint">Primero monta la sesión (Fuerza, Accesorio y WOD) o carga la pizarra del día, y luego vuelve aquí desde Sesión.</p>`;
+  if(!items.length&&st.acc===null&&!st.pizAcc&&!st.wods.length) return `<h2>Registrar entreno</h2><p class="hint">Primero monta la sesión (Fuerza, Accesorio y WOD) o carga la pizarra del día, y luego vuelve aquí desde Sesión.</p>`;
   const lifts=allLifts();
   const fz=items.map((f,k)=>{const rm=parseFloat(st.rm[f.id]);
     const sel=f.id==='otro'||f.fase==='Pizarra'?`<label class="lbl" for="f${k}id" style="margin-bottom:6px">Ejercicio<select class="field" id="f${k}id">${lifts.map(it=>`<option value="${it.id}" ${it.id===f.id?'selected':''}>${esc(it.n)}</option>`).join('')}<option value="otro" ${f.id==='otro'?'selected':''}>Otro</option></select></label>`:'';
@@ -840,7 +910,7 @@ function vRegistrar(){
       return `<div class="logset"><span class="s">S${j+1}</span><input class="field" inputmode="numeric" id="f${k}r${j}" value="${r.reps}" aria-label="Reps serie ${j+1}"><input class="field" inputmode="decimal" id="f${k}k${j}" value="${prev}" placeholder="kg" aria-label="Kg serie ${j+1}"><span class="prev">${r.pct?r.pct+'%':''}${prev?'<br>'+prev+' kg':''}</span></div>`}).join('');
     return `<section class="sheet"><h3>${esc(f.n)}</h3><p class="desc">${esc(f.esquema)} · ${esc(f.fase)}</p>${sel}
       <div class="logset hd"><span></span><span>Reps</span><span>Kg reales</span><span style="text-align:right">Previsto</span></div>${rows}</section>`}).join('');
-  const a=st.acc!==null?ACC[st.acc]:null;
+  const a=st.acc!==null?ACC[st.acc]:(st.pizAcc?accFromText(st.pizAcc):null);
   const acc=a?`<section class="sheet"><h3>${esc(a.n)}</h3><p class="desc">${esc(a.r)}</p><label class="lbl" for="lgAcc">Kg usados o notas<input class="field" id="lgAcc" placeholder="Ej.: hammer 14 kg, extensión 20 kg"></label></section>`:'';
   const ws=st.wods.map((id,i)=>{const w=W.find(x=>x.id===id);
     return `<section class="sheet wod ${w.cat}"><h3>${esc(w.n)}</h3><p class="desc">${w.fmt} ${w.min}' · ${esc(w.f)}</p>
@@ -884,7 +954,7 @@ function saveEntry(){
       if(sel){id=sel.value;const it=lifts.find(x=>x.id===id);n=it?it.n:(f.n||'Otro')}
       const rm=num(st.rm[id]);
       return {id,n,esquema:f.esquema,fase:f.fase,rm,sets:f.rows.map((r,j)=>({serie:j+1,reps:num(val('f'+k+'r'+j)),pct:r.pct,prev:r.pct&&rm?kg(rm,r.pct):null,kg:num(val('f'+k+'k'+j))}))}}),
-    acc:st.acc!==null?{n:ACC[st.acc].n,r:ACC[st.acc].r,nota:val('lgAcc')}:null,
+    acc:st.acc!==null?{n:ACC[st.acc].n,r:ACC[st.acc].r,nota:val('lgAcc')}:(st.pizAcc?{...accFromText(st.pizAcc),nota:val('lgAcc')}:null),
     wods:st.wods.map((id,i)=>{const w=W.find(x=>x.id===id);return {n:w.n,f:w.f,cat:CATS[w.cat],fmt:w.fmt,min:w.min,res:val('w'+i+'res'),rx:val('w'+i+'rx'),nota:val('w'+i+'nota')}})};
   st.log.push(e);saveLog();st.flash='Entreno guardado.';st.tab='hist';
 }
@@ -944,11 +1014,12 @@ document.addEventListener('click',e=>{
   if(t.id==='pzCam'||t.id==='pzGal'){st.piz.status='Abriendo…';st.piz.err=false;const s=$('#pzStatus');if(s){s.textContent=t.id==='pzCam'?'Abriendo la cámara…':'Abriendo la galería…';s.className='status'}
     try{Android.pickPhoto(t.id==='pzCam'?'camera':'gallery');setTimeout(()=>{const s2=$('#pzStatus');if(s2&&/Abriendo/.test(s2.textContent))s2.textContent='Leyendo la pizarra…'},1500)}catch(e){window.onPizarraError('No se pudo abrir: '+e.message)}return}
   if(t.id==='pzSave'||t.id==='pzUse'){let c=null;if(st.piz.wod.trim())c=savePizarra();
-    if(t.id==='pzUse'){st.pizF=st.piz.fuerza.trim();st.fuerza=[];st.acc=null;st.wods=c?[c.id]:[];st.tab='sesion'}
+    if(t.id==='pzUse'){st.pizF=st.piz.fuerza.trim();st.pizAcc=st.piz.acc.trim();st.fuerza=[];st.acc=null;st.wods=c?[c.id]:[];st.tab='sesion'}
     else{st.pizOnly=true;st.tab='wod'}
-    st.piz={status:'',err:false,fuerza:'',wod:'',name:'',fecha:''};render();window.scrollTo(0,0);return}
-  if(t.id==='pzClear'){st.piz={status:'',err:false,fuerza:'',wod:'',name:'',fecha:''};render();return}
+    st.piz={status:'',err:false,fuerza:'',wod:'',acc:'',name:'',fecha:''};render();window.scrollTo(0,0);return}
+  if(t.id==='pzClear'){st.piz={status:'',err:false,fuerza:'',wod:'',acc:'',name:'',fecha:''};render();return}
   if(d.rmpiz){st.pizF='';render();return}
+  if(d.rmpacc){st.pizAcc='';render();return}
   if(d.delw){st.delW=d.delw;const y=window.scrollY;render();window.scrollTo(0,y);return}
   if(d.delwno){st.delW=null;const y=window.scrollY;render();window.scrollTo(0,y);return}
   if(d.delwok){st.custom=st.custom.filter(c=>c.id!==d.delwok);saveCustom();const i=W.findIndex(w=>w.id===d.delwok);if(i>=0)W.splice(i,1);st.wods=st.wods.filter(x=>x!==d.delwok);st.delW=null;const y=window.scrollY;render();window.scrollTo(0,y);return}
@@ -976,15 +1047,15 @@ document.addEventListener('click',e=>{
   else if(d.rmacc){st.acc=null}
   else if(t.id==='rndWod'){const l=filtered();const w=l[Math.floor(Math.random()*l.length)];if(w&&!st.wods.includes(w.id)){if(st.wods.length>=2)st.wods.shift();st.wods.push(w.id)}st.tab='sesion'}
   else if(t.id==='goSession'){st.tab='sesion';render();window.scrollTo(0,0);return}
-  else if(t.id==='reset'){st.fuerza=[];st.acc=null;st.wods=[]}
+  else if(t.id==='reset'){st.fuerza=[];st.acc=null;st.wods=[];st.pizF='';st.pizAcc=''}
   else if(t.id==='randomAll'){randomAll()}
   else if(t.id==='copy'){copySession();return}
   else return;
   const y=window.scrollY;render();if(!['randomAll','rndWod','reset'].includes(t.id))window.scrollTo(0,y);else window.scrollTo(0,0);
 });
-document.addEventListener('change',e=>{if(e.target.dataset&&e.target.dataset.rm)pushRm(e.target.dataset.rm,e.target.value);if(['pzF','pzW'].includes(e.target.id)&&st.tab==='pizarra'){const y=window.scrollY;render();window.scrollTo(0,y)}});
+document.addEventListener('change',e=>{if(e.target.dataset&&e.target.dataset.rm)pushRm(e.target.dataset.rm,e.target.value);if(['pzF','pzW','pzA'].includes(e.target.id)&&st.tab==='pizarra'){const y=window.scrollY;render();window.scrollTo(0,y)}});
 document.addEventListener('input',e=>{
-  const id=e.target.id;if(id==='pzF'){st.piz.fuerza=e.target.value}else if(id==='pzW'){st.piz.wod=e.target.value}else if(id==='pzN'){st.piz.name=e.target.value}else if(id==='pzD'){st.piz.fecha=e.target.value}
+  const id=e.target.id;if(id==='pzF'){st.piz.fuerza=e.target.value}else if(id==='pzW'){st.piz.wod=e.target.value}else if(id==='pzA'){st.piz.acc=e.target.value}else if(id==='pzN'){st.piz.name=e.target.value}else if(id==='pzD'){st.piz.fecha=e.target.value}
   if(e.target.dataset.rm){const id=e.target.dataset.rm;const v=e.target.value.replace(',','.');st.rm[id]=v;saveRM();
     const art=e.target.closest('article');const it=allLifts().find(x=>x.id===id);
     art.querySelectorAll('.scheme').forEach(b=>{b.querySelector('.sets').innerHTML=setsTxt(it,it.sch[+b.dataset.i])});}
