@@ -1,10 +1,12 @@
 package com.vicente.hemeroteca;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,13 +22,29 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import androidx.core.content.FileProvider;
+
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.text.Text;
+import com.google.mlkit.vision.text.TextRecognition;
+import com.google.mlkit.vision.text.TextRecognizer;
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class MainActivity extends Activity {
 
+    private static final int REQ_CAM = 11;
+    private static final int REQ_GAL = 12;
+
     private WebView web;
+    private Uri camUri;
+    private volatile String pending; // texto leído que la página aún no ha recogido
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +82,8 @@ public class MainActivity extends Activity {
 
         setContentView(web);
         if (savedInstanceState != null) {
+            String cu = savedInstanceState.getString("camUri");
+            if (cu != null) camUri = Uri.parse(cu);
             web.restoreState(savedInstanceState);
         } else {
             web.loadUrl("file:///android_asset/index.html");
@@ -85,7 +105,107 @@ public class MainActivity extends Activity {
         public void saveFile(final String name, final String b64, final String mime) {
             runOnUiThread(() -> doSave(name, b64, mime));
         }
+
+        @JavascriptInterface
+        public String takePending() {
+            String p = pending;
+            pending = null;
+            return p == null ? "" : p;
+        }
+
+        @JavascriptInterface
+        public void pickPhoto(final String source) {
+            runOnUiThread(() -> startPick(source));
+        }
     }
+
+    /* ---------- Foto de la pizarra ---------- */
+
+    private void startPick(String source) {
+        try {
+            if ("camera".equals(source)) {
+                File dir = new File(getCacheDir(), "fotos");
+                dir.mkdirs();
+                File f = new File(dir, "pizarra_" + System.currentTimeMillis() + ".jpg");
+                camUri = FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", f);
+                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                i.putExtra(MediaStore.EXTRA_OUTPUT, camUri);
+                i.setClipData(ClipData.newRawUri("foto", camUri));
+                i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivityForResult(i, REQ_CAM);
+            } else {
+                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                i.setType("image/*");
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                startActivityForResult(Intent.createChooser(i, "Elige la foto de la pizarra"), REQ_GAL);
+            }
+        } catch (Exception e) {
+            jsError("No se pudo abrir la cámara o la galería: " + e.getMessage());
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != REQ_CAM && requestCode != REQ_GAL) return;
+        if (resultCode != RESULT_OK) {
+            jsError("cancel");
+            return;
+        }
+        Uri uri = requestCode == REQ_CAM ? camUri : (data != null ? data.getData() : null);
+        if (uri == null) {
+            jsError("No ha llegado ninguna foto.");
+            return;
+        }
+        runOcr(uri);
+    }
+
+    private void runOcr(Uri uri) {
+        try {
+            final InputImage img = InputImage.fromFilePath(this, uri);
+            TextRecognizer rec = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
+            rec.process(img)
+                    .addOnSuccessListener(text -> sendText(img, text))
+                    .addOnFailureListener(e -> jsError("No se pudo leer la foto: " + e.getMessage()));
+        } catch (Exception e) {
+            jsError("No se pudo abrir la foto: " + e.getMessage());
+        }
+    }
+
+    private void sendText(InputImage img, Text text) {
+        try {
+            boolean rotated = img.getRotationDegrees() == 90 || img.getRotationDegrees() == 270;
+            JSONObject o = new JSONObject();
+            o.put("w", rotated ? img.getHeight() : img.getWidth());
+            o.put("h", rotated ? img.getWidth() : img.getHeight());
+            JSONArray arr = new JSONArray();
+            for (Text.TextBlock b : text.getTextBlocks()) {
+                for (Text.Line l : b.getLines()) {
+                    JSONObject j = new JSONObject();
+                    j.put("t", l.getText());
+                    Rect r = l.getBoundingBox();
+                    if (r != null) {
+                        j.put("x", r.left);
+                        j.put("y", r.top);
+                        j.put("r", r.right);
+                        j.put("b", r.bottom);
+                    }
+                    arr.put(j);
+                }
+            }
+            o.put("lines", arr);
+            pending = o.toString();
+            web.evaluateJavascript("window.onPizarra&&window.onPizarra(" + o + ")", null);
+        } catch (Exception e) {
+            jsError("Error procesando el texto: " + e.getMessage());
+        }
+    }
+
+    private void jsError(String msg) {
+        web.evaluateJavascript("window.onPizarraError&&window.onPizarraError(" + JSONObject.quote(msg) + ")", null);
+    }
+
+    /* ---------- Exportar a Excel ---------- */
 
     private void doSave(String name, String b64, String mime) {
         try {
@@ -124,6 +244,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        if (camUri != null) outState.putString("camUri", camUri.toString());
         web.saveState(outState);
     }
 
