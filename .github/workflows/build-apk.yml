@@ -26,7 +26,9 @@ jobs:
       - name: Preparar firma
         env:
           KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
-        run: echo "$KEYSTORE_B64" | base64 -d > app/release.jks
+        run: |
+          printf '%s' "$KEYSTORE_B64" | tr -d ' \r\n\t' | base64 -d > app/release.jks
+          ls -l app/release.jks
 
       - name: Compilar
         env:
