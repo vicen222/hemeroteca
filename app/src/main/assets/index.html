@@ -8,37 +8,37 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* Dirección: "cristal lavanda". Fondo lavanda con dos manchas de luz, tarjetas de cristal, acento violeta y una barra de pestañas marino flotante abajo, al alcance del pulgar. Cifras en mono. Los discos mantienen su código de color (verde <70 · amarillo 70-79 · azul 80-89 · rojo 90+). */
+/* Dirección: "cristal naranja". Fondo crema con dos manchas de luz, tarjetas de cristal, acento naranja y una barra de pestañas marino flotante abajo, al alcance del pulgar. Cifras en mono. Los discos mantienen su código de color (verde <70 · amarillo 70-79 · azul 80-89 · rojo 90+). */
 :root{
-  --bg:#eceefb; --bg2:#f6f4ff; --glass:rgba(255,255,255,.72); --glass-b:rgba(255,255,255,.9); --line:#e2e3f3;
-  --ink:#151a36; --muted:#6c7194; --faint:#a3a7c4;
+  --bg:#f6f0e9; --bg2:#fffaf4; --glass:rgba(255,255,255,.72); --glass-b:rgba(255,255,255,.92); --line:#ece2d8;
+  --ink:#1c1a2e; --muted:#766e68; --faint:#b2a89f;
   --navy:#1a1f4b; --navy2:#262c63; --navy-ink:#eef0ff; --navy-mut:#a8addb;
-  --accent:#6a5cf2; --accent-soft:#e7e4ff; --accent2:#9b8cff;
-  --sun:#ee7d2f; --sun-soft:#fdeadb;
+  --accent:#e05d0e; --accent-soft:#fde8d8; --accent2:#f5a05c; --on-accent:#fff;
+  --sun:#e05d0e; --sun-soft:#fde8d8;
   --good:#18925a; --good-soft:#dcf3e6; --bad:#d2453a; --bad-soft:#fbe3e0;
-  --p-green:#18925a; --p-yellow:#e0a400; --p-blue:#4b78ee; --p-red:#d2453a; --p-black:#151a36;
-  --shadow:0 10px 30px rgba(52,46,140,.08),0 1px 2px rgba(52,46,140,.06);
+  --p-green:#18925a; --p-yellow:#e0a400; --p-blue:#4b78ee; --p-red:#d2453a; --p-black:#1c1a2e;
+  --shadow:0 10px 30px rgba(140,80,30,.08),0 1px 2px rgba(140,80,30,.06);
   --f-display:"Manrope",system-ui,sans-serif; --f-serif:"Instrument Serif",Georgia,serif; --f-mono:"JetBrains Mono",ui-monospace,monospace;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0d0f22; --bg2:#141632; --glass:rgba(27,30,62,.78); --glass-b:rgba(60,64,120,.5); --line:#2a2e58;
-  --ink:#eceeff; --muted:#a2a6cc; --faint:#6d7199;
+  --bg:#13100e; --bg2:#1e1814; --glass:rgba(38,31,27,.8); --glass-b:rgba(92,74,62,.45); --line:#382d26;
+  --ink:#f7efe8; --muted:#bcaea2; --faint:#7c6f65;
   --navy:#22286a; --navy2:#2f3683; --navy-ink:#f1f2ff; --navy-mut:#b4b8e6;
-  --accent:#8f84ff; --accent-soft:#2b2a5c; --accent2:#b3a9ff;
-  --sun:#ff9a52; --sun-soft:#3b2716;
+  --accent:#ff9a4d; --accent-soft:#3d2614; --accent2:#ffbe85; --on-accent:#1f1206;
+  --sun:#ff9a4d; --sun-soft:#3d2614;
   --good:#4fd08c; --good-soft:#163527; --bad:#ff7d72; --bad-soft:#3d1d1b;
-  --p-green:#4fd08c; --p-yellow:#f0c02a; --p-blue:#7ea0ff; --p-red:#ff7d72; --p-black:#eceeff;
-  --shadow:0 10px 30px rgba(0,0,0,.35); color-scheme:dark}}
+  --p-green:#4fd08c; --p-yellow:#f0c02a; --p-blue:#7ea0ff; --p-red:#ff7d72; --p-black:#f7efe8;
+  --shadow:0 10px 30px rgba(0,0,0,.4); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0d0f22; --bg2:#141632; --glass:rgba(27,30,62,.78); --glass-b:rgba(60,64,120,.5); --line:#2a2e58;
-  --ink:#eceeff; --muted:#a2a6cc; --faint:#6d7199;
+  --bg:#13100e; --bg2:#1e1814; --glass:rgba(38,31,27,.8); --glass-b:rgba(92,74,62,.45); --line:#382d26;
+  --ink:#f7efe8; --muted:#bcaea2; --faint:#7c6f65;
   --navy:#22286a; --navy2:#2f3683; --navy-ink:#f1f2ff; --navy-mut:#b4b8e6;
-  --accent:#8f84ff; --accent-soft:#2b2a5c; --accent2:#b3a9ff;
-  --sun:#ff9a52; --sun-soft:#3b2716;
+  --accent:#ff9a4d; --accent-soft:#3d2614; --accent2:#ffbe85; --on-accent:#1f1206;
+  --sun:#ff9a4d; --sun-soft:#3d2614;
   --good:#4fd08c; --good-soft:#163527; --bad:#ff7d72; --bad-soft:#3d1d1b;
-  --p-green:#4fd08c; --p-yellow:#f0c02a; --p-blue:#7ea0ff; --p-red:#ff7d72; --p-black:#eceeff;
-  --shadow:0 10px 30px rgba(0,0,0,.35); color-scheme:dark}
+  --p-green:#4fd08c; --p-yellow:#f0c02a; --p-blue:#7ea0ff; --p-red:#ff7d72; --p-black:#f7efe8;
+  --shadow:0 10px 30px rgba(0,0,0,.4); color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{margin:0;min-height:100%}
@@ -53,7 +53,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 .eyebrow .live{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px var(--good-soft)}
 .eyebrow b{color:var(--ink)}
 h1{font-weight:800;font-size:clamp(2.3rem,9vw,3.3rem);line-height:1;letter-spacing:-.035em;margin:0}
-h1 em{display:block;font-family:var(--f-serif);font-style:italic;font-weight:400;letter-spacing:-.01em;font-size:1.08em;color:var(--accent)}
+h1 em{display:inline;font-family:var(--f-serif);font-style:italic;font-weight:400;letter-spacing:-.01em;font-size:1.08em;color:var(--accent)}
 .heroRow{display:grid;gap:12px}
 .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .stat{background:var(--glass);border:1px solid var(--glass-b);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:18px;box-shadow:var(--shadow);padding:12px 14px;display:grid;gap:4px}
@@ -63,7 +63,7 @@ h1 em{display:block;font-family:var(--f-serif);font-style:italic;font-weight:400
 .heroBtns .btn{white-space:nowrap;padding:12px 8px;font-size:.82rem;gap:6px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--glass-b);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--ink);border-radius:12px;padding:10px 16px;font-weight:700;font-size:.86rem;cursor:pointer;box-shadow:var(--shadow)}
 .btn:hover{border-color:var(--accent2)}
-.btn.solid{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.solid{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .btn.solid:hover{filter:brightness(1.07)}
 .btn.ghost{background:transparent;box-shadow:none}
 .btn:disabled{opacity:.45;cursor:default}
@@ -83,7 +83,7 @@ h2{font-weight:800;font-size:1.5rem;letter-spacing:-.025em;line-height:1.1;margi
 .chip{flex:none;border:1px solid var(--glass-b);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:999px;padding:7px 14px;cursor:pointer;font-weight:600;font-size:.82rem;color:var(--muted);display:inline-flex;align-items:center;gap:7px;box-shadow:var(--shadow)}
 .chip small{color:var(--faint);font-family:var(--f-mono);font-size:.72rem}
 .chip:hover{color:var(--ink)}
-.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .chip[aria-pressed="true"] small{color:inherit;opacity:.75}
 .chip .sw{width:8px;height:8px;border-radius:50%}
 
@@ -105,7 +105,7 @@ h2{font-weight:800;font-size:1.5rem;letter-spacing:-.025em;line-height:1.1;margi
 .sets{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.84rem;font-weight:500;letter-spacing:-.01em}
 .kg{font-weight:600;color:var(--accent)}
 .mark{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:.72rem;color:transparent}
-.scheme[aria-pressed="true"] .mark{background:var(--accent);border-color:var(--accent);color:#fff}
+.scheme[aria-pressed="true"] .mark{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 
 /* barra con discos */
 .barbell{position:relative;height:40px;display:flex;align-items:center;gap:2px;padding-left:10px}
@@ -166,7 +166,7 @@ textarea{width:100%;min-height:200px;border:1px solid var(--line);border-radius:
 
 /* navegación inferior: barra marino flotante */
 nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;padding:0 max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left,0px));pointer-events:none}
-nav.tabs .in{pointer-events:auto;max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;background:var(--navy);border-radius:24px;padding:6px;box-shadow:0 14px 34px rgba(26,31,75,.35)}
+nav.tabs .in{pointer-events:auto;max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;background:var(--navy);border-radius:24px;padding:6px;box-shadow:0 14px 34px rgba(26,31,75,.3)}
 nav.tabs button{background:transparent;border:0;border-radius:18px;padding:8px 2px;cursor:pointer;color:var(--navy-mut);display:grid;justify-items:center;gap:2px;min-width:0}
 nav.tabs button:hover{background:var(--navy2);color:var(--navy-ink)}
 nav.tabs .k{font:500 .62rem var(--f-mono);opacity:.75}
@@ -188,7 +188,7 @@ input.field[inputmode]{font-family:var(--f-mono);font-weight:600}
 .logset .s{font:600 .8rem var(--f-mono);color:var(--accent)}
 .logset .prev{font:500 .72rem var(--f-mono);color:var(--muted);text-align:right}
 .two{display:grid;grid-template-columns:1fr 120px;gap:8px}
-.upd{display:block;margin:12px 0 0;padding:12px 14px;border-radius:14px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:.88rem;box-shadow:var(--shadow)}
+.upd{display:block;margin:12px 0 0;padding:12px 14px;border-radius:14px;background:var(--accent);color:var(--on-accent);text-decoration:none;font-weight:700;font-size:.88rem;box-shadow:var(--shadow)}
 .ok{color:var(--good);font-weight:700;font-size:.88rem;margin:0 0 10px}
 .rmtable{width:100%;border-collapse:collapse;font-size:.86rem}
 .rmtable td,.rmtable th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
@@ -232,7 +232,7 @@ textarea.field{min-height:120px;resize:vertical;line-height:1.5;font:500 .86rem 
 <div class="wrap">
   <header class="hero">
     <p class="eyebrow"><span class="live" aria-hidden="true"></span><b>Hemeroteca</b> de entrenos</p>
-    <h1>¿Qué toca<em>hoy?</em></h1>
+    <h1>Hoy se <em>entrena</em></h1>
     <div class="heroRow">
       <div class="stats" id="tot"></div>
       <div class="heroBtns"><button class="btn solid" id="goPiz" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></svg>Foto de la pizarra</button><button class="btn" id="randomAll" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/><path d="m18 14 4 4-4 4"/></svg>Sorpréndeme</button></div>
