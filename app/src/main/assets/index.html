@@ -11,12 +11,12 @@
 /* Dirección: "cristal naranja". Fondo crema con dos manchas de luz, tarjetas de cristal, acento naranja y una barra de pestañas marino flotante abajo, al alcance del pulgar. Cifras en mono. Los discos mantienen su código de color (verde <70 · amarillo 70-79 · azul 80-89 · rojo 90+). */
 :root{
   --bg:#f6f0e9; --bg2:#fffaf4; --glass:rgba(255,255,255,.72); --glass-b:rgba(255,255,255,.92); --line:#ece2d8;
-  --ink:#1c1a2e; --muted:#766e68; --faint:#b2a89f;
-  --navy:#1a1f4b; --navy2:#262c63; --navy-ink:#eef0ff; --navy-mut:#a8addb;
+  --ink:#24190f; --muted:#766e68; --faint:#b2a89f;
+  --navy:#d9540b; --navy2:#ef7a22; --navy-ink:#fff8f2; --navy-mut:#ffe2cc;
   --accent:#e05d0e; --accent-soft:#fde8d8; --accent2:#f5a05c; --on-accent:#fff;
   --sun:#e05d0e; --sun-soft:#fde8d8;
   --good:#18925a; --good-soft:#dcf3e6; --bad:#d2453a; --bad-soft:#fbe3e0;
-  --p-green:#18925a; --p-yellow:#e0a400; --p-blue:#4b78ee; --p-red:#d2453a; --p-black:#1c1a2e;
+  --p-green:#18925a; --p-yellow:#e0a400; --p-blue:#4b78ee; --p-red:#d2453a; --p-black:#24190f;
   --shadow:0 10px 30px rgba(140,80,30,.08),0 1px 2px rgba(140,80,30,.06);
   --f-display:"Manrope",system-ui,sans-serif; --f-serif:"Instrument Serif",Georgia,serif; --f-mono:"JetBrains Mono",ui-monospace,monospace;
   color-scheme:light;
@@ -24,7 +24,7 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#13100e; --bg2:#1e1814; --glass:rgba(38,31,27,.8); --glass-b:rgba(92,74,62,.45); --line:#382d26;
   --ink:#f7efe8; --muted:#bcaea2; --faint:#7c6f65;
-  --navy:#22286a; --navy2:#2f3683; --navy-ink:#f1f2ff; --navy-mut:#b4b8e6;
+  --navy:#7a2f0a; --navy2:#a3430f; --navy-ink:#fff4ea; --navy-mut:#f5cba8;
   --accent:#ff9a4d; --accent-soft:#3d2614; --accent2:#ffbe85; --on-accent:#1f1206;
   --sun:#ff9a4d; --sun-soft:#3d2614;
   --good:#4fd08c; --good-soft:#163527; --bad:#ff7d72; --bad-soft:#3d1d1b;
@@ -33,7 +33,7 @@
 :root[data-theme="dark"]{
   --bg:#13100e; --bg2:#1e1814; --glass:rgba(38,31,27,.8); --glass-b:rgba(92,74,62,.45); --line:#382d26;
   --ink:#f7efe8; --muted:#bcaea2; --faint:#7c6f65;
-  --navy:#22286a; --navy2:#2f3683; --navy-ink:#f1f2ff; --navy-mut:#b4b8e6;
+  --navy:#7a2f0a; --navy2:#a3430f; --navy-ink:#fff4ea; --navy-mut:#f5cba8;
   --accent:#ff9a4d; --accent-soft:#3d2614; --accent2:#ffbe85; --on-accent:#1f1206;
   --sun:#ff9a4d; --sun-soft:#3d2614;
   --good:#4fd08c; --good-soft:#163527; --bad:#ff7d72; --bad-soft:#3d1d1b;
@@ -142,7 +142,7 @@ h2{font-weight:800;font-size:1.5rem;letter-spacing:-.025em;line-height:1.1;margi
 .accRow{display:flex;justify-content:space-between;gap:12px;align-items:center}
 
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 12px}
-.search{flex:1;min-width:170px;padding:11px 16px 11px 40px;border:1px solid var(--glass-b);border-radius:999px;background:var(--glass) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a8fb3' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat 15px 50%;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow);font-size:.88rem}
+.search{flex:1;min-width:170px;padding:11px 16px 11px 40px;border:1px solid var(--glass-b);border-radius:999px;background:var(--glass) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a08f82' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat 15px 50%;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow);font-size:.88rem}
 .search:focus{border-color:var(--accent);outline:none}
 .search::placeholder{color:var(--faint)}
 .count{color:var(--muted);font-size:.8rem;margin:0 0 10px}
@@ -161,18 +161,18 @@ textarea{width:100%;min-height:200px;border:1px solid var(--line);border-radius:
 /* total de la sesión: ficha oscura */
 .total{position:relative;overflow:hidden;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin:4px 0 12px;padding:18px 20px;border-radius:22px;background:linear-gradient(160deg,var(--navy2),var(--navy));color:var(--navy-ink);box-shadow:var(--shadow)}
 .total::after{content:"";position:absolute;inset:auto -60px -90px auto;width:220px;height:220px;border-radius:50%;background:radial-gradient(var(--accent2),transparent 65%);opacity:.3;pointer-events:none}
-.total b{font-family:var(--f-mono);font-size:2.8rem;font-weight:600;line-height:1;letter-spacing:-.05em;color:#5ef0a5}
+.total b{font-family:var(--f-mono);font-size:2.8rem;font-weight:600;line-height:1;letter-spacing:-.05em;color:var(--navy-ink)}
 .total span{color:var(--navy-mut);font-size:.84rem}
 
 /* navegación inferior: barra marino flotante */
 nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;padding:0 max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left,0px));pointer-events:none}
-nav.tabs .in{pointer-events:auto;max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;background:var(--navy);border-radius:24px;padding:6px;box-shadow:0 14px 34px rgba(26,31,75,.3)}
+nav.tabs .in{pointer-events:auto;max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;background:var(--navy);border-radius:24px;padding:6px;box-shadow:0 14px 34px rgba(190,75,10,.32)}
 nav.tabs button{background:transparent;border:0;border-radius:18px;padding:8px 2px;cursor:pointer;color:var(--navy-mut);display:grid;justify-items:center;gap:2px;min-width:0}
 nav.tabs button:hover{background:var(--navy2);color:var(--navy-ink)}
 nav.tabs .k{font:500 .62rem var(--f-mono);opacity:.75}
 nav.tabs .l{font-size:.74rem;font-weight:700;display:inline-flex;align-items:center;gap:4px;max-width:100%}
 nav.tabs button[aria-selected="true"]{background:var(--navy-ink);color:var(--navy)}
-nav.tabs .n{display:inline-grid;place-items:center;min-width:16px;height:16px;border-radius:8px;background:var(--sun);color:#fff;font:700 .6rem var(--f-mono);padding:0 3px}
+nav.tabs .n{display:inline-grid;place-items:center;min-width:16px;height:16px;border-radius:8px;background:#24190f;color:#fff;font:700 .6rem var(--f-mono);padding:0 3px}
 .dock{display:none}
 
 /* registro e historial */
