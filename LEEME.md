@@ -1,6 +1,6 @@
 # Hemeroteca (app Android)
 
-App para elegir fuerza, superserie y WOD a partir del cuaderno del box.
+App para elegir fuerza, superserie y WOD.
 Funciona sin internet (solo usa internet para cargar la tipografía).
 
 ## Cómo sacar el APK (una vez)

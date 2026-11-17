@@ -6,91 +6,106 @@
 <title>Hemeroteca de entrenos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* Dirección: "discos de halterofilia". App clara y limpia; el único gesto fuerte es el código de color de los discos (verde 10 · amarillo 15 · azul 20 · rojo 25): la intensidad de cada esquema se dibuja como placas cargadas en una barra, y los tipos de WOD usan el mismo código. Navegación por pasos abajo, al alcance del pulgar. */
+/* Dirección: "cristal lavanda". Fondo lavanda con dos manchas de luz, tarjetas de cristal, acento violeta y una barra de pestañas marino flotante abajo, al alcance del pulgar. Cifras en mono. Los discos mantienen su código de color (verde <70 · amarillo 70-79 · azul 80-89 · rojo 90+). */
 :root{
-  --bg:#f2f2ee;
-  --card:#ffffff;
-  --ink:#131518;
-  --muted:#60656c;
-  --faint:#9a9ea4;
-  --rule:#e3e3dd;
-  --soft:#ebebe6;
-  --p-green:#1f9a55; --p-yellow:#e2ad00; --p-blue:#1e5bd0; --p-red:#d63a2b; --p-black:#131518;
-  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
-  --body:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --bg:#eceefb; --bg2:#f6f4ff; --glass:rgba(255,255,255,.72); --glass-b:rgba(255,255,255,.9); --line:#e2e3f3;
+  --ink:#151a36; --muted:#6c7194; --faint:#a3a7c4;
+  --navy:#1a1f4b; --navy2:#262c63; --navy-ink:#eef0ff; --navy-mut:#a8addb;
+  --accent:#6a5cf2; --accent-soft:#e7e4ff; --accent2:#9b8cff;
+  --sun:#ee7d2f; --sun-soft:#fdeadb;
+  --good:#18925a; --good-soft:#dcf3e6; --bad:#d2453a; --bad-soft:#fbe3e0;
+  --p-green:#18925a; --p-yellow:#e0a400; --p-blue:#4b78ee; --p-red:#d2453a; --p-black:#151a36;
+  --shadow:0 10px 30px rgba(52,46,140,.08),0 1px 2px rgba(52,46,140,.06);
+  --f-display:"Manrope",system-ui,sans-serif; --f-serif:"Instrument Serif",Georgia,serif; --f-mono:"JetBrains Mono",ui-monospace,monospace;
   color-scheme:light;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0f1114;--card:#181b20;--ink:#eef0f3;--muted:#a1a6ae;--faint:#6c7179;--rule:#262a31;--soft:#20242a;
-    --p-green:#35b86d;--p-yellow:#f0c02a;--p-blue:#4f86ef;--p-red:#ee5a49;--p-black:#eef0f3;
-    color-scheme:dark;
-  }
-}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d0f22; --bg2:#141632; --glass:rgba(27,30,62,.78); --glass-b:rgba(60,64,120,.5); --line:#2a2e58;
+  --ink:#eceeff; --muted:#a2a6cc; --faint:#6d7199;
+  --navy:#22286a; --navy2:#2f3683; --navy-ink:#f1f2ff; --navy-mut:#b4b8e6;
+  --accent:#8f84ff; --accent-soft:#2b2a5c; --accent2:#b3a9ff;
+  --sun:#ff9a52; --sun-soft:#3b2716;
+  --good:#4fd08c; --good-soft:#163527; --bad:#ff7d72; --bad-soft:#3d1d1b;
+  --p-green:#4fd08c; --p-yellow:#f0c02a; --p-blue:#7ea0ff; --p-red:#ff7d72; --p-black:#eceeff;
+  --shadow:0 10px 30px rgba(0,0,0,.35); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0f1114;--card:#181b20;--ink:#eef0f3;--muted:#a1a6ae;--faint:#6c7179;--rule:#262a31;--soft:#20242a;
-  --p-green:#35b86d;--p-yellow:#f0c02a;--p-blue:#4f86ef;--p-red:#ee5a49;--p-black:#eef0f3;
-  color-scheme:dark;
-}
+  --bg:#0d0f22; --bg2:#141632; --glass:rgba(27,30,62,.78); --glass-b:rgba(60,64,120,.5); --line:#2a2e58;
+  --ink:#eceeff; --muted:#a2a6cc; --faint:#6d7199;
+  --navy:#22286a; --navy2:#2f3683; --navy-ink:#f1f2ff; --navy-mut:#b4b8e6;
+  --accent:#8f84ff; --accent-soft:#2b2a5c; --accent2:#b3a9ff;
+  --sun:#ff9a52; --sun-soft:#3b2716;
+  --good:#4fd08c; --good-soft:#163527; --bad:#ff7d72; --bad-soft:#3d1d1b;
+  --p-green:#4fd08c; --p-yellow:#f0c02a; --p-blue:#7ea0ff; --p-red:#ff7d72; --p-black:#eceeff;
+  --shadow:0 10px 30px rgba(0,0,0,.35); color-scheme:dark}
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
-button,input,textarea{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--p-blue);outline-offset:2px;border-radius:6px}
-.wrap{max-width:720px;margin:0 auto;padding:0 18px 130px}
+[hidden]{display:none!important}
+html,body{margin:0;min-height:100%}
+body{background:radial-gradient(1200px 700px at 85% -10%,var(--bg2),transparent 60%),radial-gradient(900px 600px at 10% 110%,var(--bg2),transparent 60%),var(--bg);background-attachment:fixed;color:var(--ink);font-family:var(--f-display);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+.wrap{max-width:720px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-right,0px)) 140px max(16px,env(safe-area-inset-left,0px))}
 
 /* cabecera */
-.hero{padding:28px 0 6px;display:grid;gap:14px}
-.eyebrow{margin:0;font-size:.78rem;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:8px}
-.dots{display:inline-flex;gap:3px}
-.dots i{width:8px;height:8px;border-radius:50%;display:block}
-h1{font-family:var(--display);font-stretch:125%;font-weight:800;font-size:clamp(2.2rem,8vw,3.4rem);line-height:.98;letter-spacing:-.025em;margin:0;text-wrap:balance}
-.heroRow{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-.stats{display:flex;gap:22px}
-.stat b{display:block;font-stretch:125%;font-weight:800;font-size:1.35rem;line-height:1.1;font-variant-numeric:tabular-nums}
-.stat span{font-size:.75rem;color:var(--muted)}
-.btn{border:1px solid var(--rule);background:var(--card);color:var(--ink);border-radius:12px;padding:10px 16px;font-weight:600;font-size:.9rem;cursor:pointer}
-.btn:hover{border-color:var(--faint)}
-.btn.solid{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.btn.ghost{background:transparent}
-.btn:disabled{opacity:.35;cursor:default}
+.hero{padding:22px 0 4px;display:grid;gap:16px}
+.eyebrow{margin:0;justify-self:start;display:inline-flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--glass-b);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:999px;padding:7px 14px;font-size:.78rem;font-weight:600;color:var(--muted);box-shadow:var(--shadow)}
+.eyebrow .live{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px var(--good-soft)}
+.eyebrow b{color:var(--ink)}
+h1{font-weight:800;font-size:clamp(2.3rem,9vw,3.3rem);line-height:1;letter-spacing:-.035em;margin:0}
+h1 em{display:block;font-family:var(--f-serif);font-style:italic;font-weight:400;letter-spacing:-.01em;font-size:1.08em;color:var(--accent)}
+.heroRow{display:grid;gap:12px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stat{background:var(--glass);border:1px solid var(--glass-b);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:18px;box-shadow:var(--shadow);padding:12px 14px;display:grid;gap:4px}
+.stat b{order:2;font-family:var(--f-mono);font-weight:600;font-size:1.55rem;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{order:1;font-size:.66rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.heroBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.heroBtns .btn{white-space:nowrap;padding:12px 8px;font-size:.82rem;gap:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--glass-b);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--ink);border-radius:12px;padding:10px 16px;font-weight:700;font-size:.86rem;cursor:pointer;box-shadow:var(--shadow)}
+.btn:hover{border-color:var(--accent2)}
+.btn.solid{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.solid:hover{filter:brightness(1.07)}
+.btn.ghost{background:transparent;box-shadow:none}
+.btn:disabled{opacity:.45;cursor:default}
+.btn svg{flex:none}
 .sub{display:none}
 
-h2{font-stretch:125%;font-weight:800;font-size:1.6rem;letter-spacing:-.02em;line-height:1.1;margin:26px 0 6px;text-wrap:balance}
-.hint{color:var(--muted);font-size:.92rem;margin:0 0 14px;max-width:60ch}
-.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.78rem;color:var(--muted);margin:-4px 0 14px}
+h2{font-weight:800;font-size:1.5rem;letter-spacing:-.025em;line-height:1.1;margin:28px 0 6px}
+.hint{color:var(--muted);font-size:.9rem;margin:0 0 14px;max-width:60ch}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font:500 .72rem var(--f-mono);color:var(--muted);margin:-4px 0 14px}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend i{width:6px;height:14px;border-radius:2px;display:block}
 
 /* selectores */
-.chips{display:flex;gap:6px;margin:8px 0 10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.chips{display:flex;gap:6px;margin:8px 0 10px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chips.wrapit{flex-wrap:wrap;overflow:visible}
-.chip{flex:none;border:1px solid var(--rule);background:var(--card);border-radius:999px;padding:7px 14px;cursor:pointer;font-weight:500;font-size:.86rem;color:var(--muted);display:inline-flex;align-items:center;gap:7px}
-.chip small{color:var(--faint);font-variant-numeric:tabular-nums}
-.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
-.chip[aria-pressed="true"] small{color:inherit;opacity:.6}
+.chip{flex:none;border:1px solid var(--glass-b);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:999px;padding:7px 14px;cursor:pointer;font-weight:600;font-size:.82rem;color:var(--muted);display:inline-flex;align-items:center;gap:7px;box-shadow:var(--shadow)}
+.chip small{color:var(--faint);font-family:var(--f-mono);font-size:.72rem}
+.chip:hover{color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip[aria-pressed="true"] small{color:inherit;opacity:.75}
 .chip .sw{width:8px;height:8px;border-radius:50%}
 
-.sheet{background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:18px}
-.list{display:grid;gap:10px}
-.lift h3,.wod h3,.acc h3{font-stretch:112%;font-weight:700;font-size:1.15rem;letter-spacing:-.01em;line-height:1.2;margin:0}
+.sheet{background:var(--glass);border:1px solid var(--glass-b);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:22px;box-shadow:var(--shadow);padding:18px;min-width:0}
+.list{display:grid;gap:12px}
+.lift h3,.wod h3,.acc h3{font-weight:800;font-size:1.08rem;letter-spacing:-.015em;line-height:1.2;margin:0}
 .liftHead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.rm{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)}
-.rm input{width:86px;padding:7px 10px;border:1px solid var(--rule);border-radius:10px;background:var(--bg);font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.rm{display:flex;align-items:center;gap:8px;font-size:.66rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.rm input{width:90px;padding:7px 10px;border:1px solid var(--line);border-radius:12px;background:var(--glass-b);font:600 .95rem var(--f-mono);text-align:right}
 .rm input::placeholder{color:var(--faint);font-weight:400}
-.desc{color:var(--muted);font-size:.86rem;margin:4px 0 12px}
+.rm input:focus{border-color:var(--accent);outline:none}
+.desc{color:var(--muted);font-size:.84rem;margin:4px 0 12px}
 .schemes{display:grid;gap:6px}
-.scheme{display:grid;grid-template-columns:84px 1fr 24px;gap:12px;align-items:center;text-align:left;border:1px solid transparent;background:var(--bg);border-radius:12px;padding:10px 12px;cursor:pointer}
-.scheme:hover{border-color:var(--rule)}
-.scheme[aria-pressed="true"]{background:var(--card);border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
-.txt{display:grid;gap:1px;min-width:0}
-.tag{font-size:.7rem;font-weight:600;color:var(--muted);letter-spacing:.02em}
-.sets{font-variant-numeric:tabular-nums;font-size:.92rem;font-weight:500}
-.kg{font-weight:700}
-.mark{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--rule);display:grid;place-items:center;font-size:.75rem;color:transparent}
-.scheme[aria-pressed="true"] .mark{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.scheme{display:grid;grid-template-columns:84px 1fr 24px;gap:12px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--glass-b);border-radius:14px;padding:10px 12px;cursor:pointer}
+.scheme:hover{border-color:var(--accent2)}
+.scheme[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.txt{display:grid;gap:2px;min-width:0}
+.tag{font-size:.64rem;font-weight:700;color:var(--muted);letter-spacing:.07em;text-transform:uppercase}
+.sets{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.84rem;font-weight:500;letter-spacing:-.01em}
+.kg{font-weight:600;color:var(--accent)}
+.mark{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:.72rem;color:transparent}
+.scheme[aria-pressed="true"] .mark{background:var(--accent);border-color:var(--accent);color:#fff}
 
 /* barra con discos */
 .barbell{position:relative;height:40px;display:flex;align-items:center;gap:2px;padding-left:10px}
@@ -98,118 +113,129 @@ h2{font-stretch:125%;font-weight:800;font-size:1.6rem;letter-spacing:-.02em;line
 .barbell::after{content:"";position:absolute;left:6px;top:50%;width:3px;height:12px;margin-top:-6px;background:var(--faint);border-radius:1px}
 .plate{position:relative;width:6px;border-radius:2px;flex:none}
 .plate.g{background:var(--p-green)}.plate.y{background:var(--p-yellow)}.plate.b{background:var(--p-blue)}.plate.r{background:var(--p-red)}
-.barbell.free span{position:relative;font-size:.7rem;font-weight:700;color:var(--muted);background:var(--bg);padding:0 4px;margin-left:4px}
-.scheme[aria-pressed="true"] .barbell.free span{background:var(--card)}
+.barbell.free span{position:relative;font:600 .66rem var(--f-mono);color:var(--muted);background:var(--glass-b);padding:0 4px;margin-left:4px;border-radius:4px}
+.scheme[aria-pressed="true"] .barbell.free span{background:var(--accent-soft)}
 
 /* WOD */
 .wod{position:relative;overflow:hidden;padding-left:22px}
-.wod::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--cc,var(--faint))}
+.wod::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--cc,var(--faint))}
 .wod.cardio{--cc:var(--p-green)}.wod.fuerza{--cc:var(--p-red)}.wod.mixto{--cc:var(--p-blue)}.wod.gimnastico{--cc:var(--p-yellow)}.wod.core{--cc:var(--faint)}
 .wodTop{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start}
 .dur{text-align:right}
-.dur b{display:block;font-stretch:125%;font-weight:800;font-size:1.9rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
-.dur span{font-size:.72rem;color:var(--muted);font-weight:600}
-.meta{display:flex;flex-wrap:wrap;gap:4px 12px;margin:6px 0 0;align-items:center}
-.pill{font-size:.76rem;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
-.pill.cat{color:var(--ink);font-weight:600}
-.pill.cat::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--cc)}
-.pill.warn{color:var(--p-red);font-weight:600}
-.moves{margin:14px 0 0;padding:14px 0 0;border-top:1px solid var(--rule);list-style:none;font-size:.95rem;display:grid;gap:4px}
-.moves li.sub{color:var(--muted);font-size:.8rem;font-weight:600;margin-top:4px}
+.dur b{display:block;font-family:var(--f-mono);font-weight:600;font-size:1.75rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+.dur span{font-size:.64rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;align-items:center}
+.pill{font-size:.7rem;font-weight:600;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;gap:6px;background:var(--glass-b);border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+.pill.cat{color:var(--ink);font-weight:700}
+.pill.cat::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cc)}
+.pill.warn{color:var(--bad);background:var(--bad-soft);border-color:transparent;font-weight:700}
+.moves{margin:14px 0 0;padding:14px 0 0;border-top:1px solid var(--line);list-style:none;font-size:.92rem;display:grid;gap:4px}
+.moves li.sub{color:var(--muted);font-size:.66rem;font-weight:700;margin-top:6px;text-transform:uppercase;letter-spacing:.07em;display:list-item}
 .moves li.sub:first-child{margin-top:0}
 .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:14px}
 .foot .rx{flex:1;min-width:0}
 .rx{font-size:.8rem;color:var(--muted)}
-.rx b{color:var(--ink);font-weight:700;margin-right:6px}
-.pick{flex:none;padding:8px 14px;font-size:.84rem}
-.wod.on,.acc.on{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.rx b{color:var(--accent);font-weight:800;margin-right:6px;font-family:var(--f-mono)}
+.pick{flex:none;padding:8px 16px;font-size:.82rem}
+.wod.on,.acc.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),var(--shadow)}
 .acc .meta{margin-top:6px}
 .accRow{display:flex;justify-content:space-between;gap:12px;align-items:center}
 
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 12px}
-.search{flex:1;min-width:170px;padding:11px 14px;border:1px solid var(--rule);border-radius:12px;background:var(--card)}
+.search{flex:1;min-width:170px;padding:11px 16px 11px 40px;border:1px solid var(--glass-b);border-radius:999px;background:var(--glass) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a8fb3' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat 15px 50%;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow);font-size:.88rem}
+.search:focus{border-color:var(--accent);outline:none}
 .search::placeholder{color:var(--faint)}
-.count{color:var(--muted);font-size:.82rem;margin:0 0 10px}
-.summary{display:grid;gap:10px}
-.block h3{font-size:.78rem;font-weight:600;color:var(--muted);margin:0 0 10px;display:flex;align-items:center;gap:8px}
-.block h3 b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:.7rem}
-.block .row>div>b{font-weight:700;font-size:1.05rem}
-.empty{color:var(--faint);margin:0;font-size:.9rem}
-.note{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--p-red);border-radius:12px;padding:12px 14px;font-size:.9rem}
-.row{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap;padding:6px 0}
-.row+.row{border-top:1px solid var(--rule)}
-.x{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:.8rem;text-decoration:underline;text-underline-offset:3px;padding:6px 0}
-textarea{width:100%;min-height:200px;border:1px solid var(--rule);border-radius:12px;background:var(--card);padding:12px;font-size:.88rem}
-.total{display:flex;gap:10px;align-items:baseline;margin:0 0 8px}
-.total b{font-stretch:125%;font-size:3rem;font-weight:800;line-height:1;letter-spacing:-.04em}
-.total span{color:var(--muted);font-size:.86rem}
+.count{color:var(--muted);font-size:.8rem;margin:0 0 10px}
+.summary{display:grid;gap:12px}
+.block>h3{font-size:.7rem;font-weight:700;color:var(--muted);margin:0 0 10px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.07em}
+.block>h3 b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font:600 .72rem var(--f-mono)}
+.block .row>div>b{font-weight:800;font-size:1rem}
+.empty{color:var(--faint);margin:0;font-size:.88rem}
+.note{background:var(--bad-soft);border:0;border-left:3px solid var(--bad);border-radius:14px;padding:12px 14px;font-size:.88rem}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap;padding:8px 0}
+.row+.row{border-top:1px solid var(--line)}
+.x{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:.78rem;font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:6px 0}
+.x:hover{color:var(--accent)}
+textarea{width:100%;min-height:200px;border:1px solid var(--line);border-radius:12px;background:var(--glass-b);padding:12px;font-size:.88rem}
 
-/* navegación inferior */
-nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--rule);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
-nav.tabs .in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
-nav.tabs button{background:transparent;border:0;border-radius:12px;padding:8px 4px;cursor:pointer;color:var(--muted);display:grid;justify-items:center;gap:2px}
-nav.tabs .k{font-size:.68rem;font-weight:600;font-variant-numeric:tabular-nums;color:var(--faint)}
-nav.tabs .l{font-size:.8rem;font-weight:600;display:inline-flex;align-items:center;gap:5px}
-nav.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
-nav.tabs button[aria-selected="true"] .k{color:inherit;opacity:.6}
-nav.tabs .n{display:inline-grid;place-items:center;min-width:17px;height:17px;border-radius:99px;background:var(--p-red);color:#fff;font-size:.65rem;font-weight:700;padding:0 4px}
+/* total de la sesión: ficha oscura */
+.total{position:relative;overflow:hidden;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin:4px 0 12px;padding:18px 20px;border-radius:22px;background:linear-gradient(160deg,var(--navy2),var(--navy));color:var(--navy-ink);box-shadow:var(--shadow)}
+.total::after{content:"";position:absolute;inset:auto -60px -90px auto;width:220px;height:220px;border-radius:50%;background:radial-gradient(var(--accent2),transparent 65%);opacity:.3;pointer-events:none}
+.total b{font-family:var(--f-mono);font-size:2.8rem;font-weight:600;line-height:1;letter-spacing:-.05em;color:#5ef0a5}
+.total span{color:var(--navy-mut);font-size:.84rem}
+
+/* navegación inferior: barra marino flotante */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;padding:0 max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left,0px));pointer-events:none}
+nav.tabs .in{pointer-events:auto;max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;background:var(--navy);border-radius:24px;padding:6px;box-shadow:0 14px 34px rgba(26,31,75,.35)}
+nav.tabs button{background:transparent;border:0;border-radius:18px;padding:8px 2px;cursor:pointer;color:var(--navy-mut);display:grid;justify-items:center;gap:2px;min-width:0}
+nav.tabs button:hover{background:var(--navy2);color:var(--navy-ink)}
+nav.tabs .k{font:500 .62rem var(--f-mono);opacity:.75}
+nav.tabs .l{font-size:.74rem;font-weight:700;display:inline-flex;align-items:center;gap:4px;max-width:100%}
+nav.tabs button[aria-selected="true"]{background:var(--navy-ink);color:var(--navy)}
+nav.tabs .n{display:inline-grid;place-items:center;min-width:16px;height:16px;border-radius:8px;background:var(--sun);color:#fff;font:700 .6rem var(--f-mono);padding:0 3px}
 .dock{display:none}
-/* registro e historial */
-.field{width:100%;padding:9px 11px;border:1px solid var(--rule);border-radius:10px;background:var(--bg);font-variant-numeric:tabular-nums}
-.field:focus{border-color:var(--ink);outline:none}
-.lbl{display:grid;gap:4px;font-size:.78rem;color:var(--muted);font-weight:600}
-.form{display:grid;gap:10px}
-.logset{display:grid;grid-template-columns:34px 1fr 1fr 74px;gap:8px;align-items:center;padding:4px 0}
-.logset.hd{font-size:.72rem;color:var(--muted);font-weight:600;padding-bottom:0}
-.logset .s{font-weight:700;color:var(--muted);font-size:.85rem}
-.logset .prev{font-size:.75rem;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
-.two{display:grid;grid-template-columns:1fr 120px;gap:8px}
-.upd{display:block;margin:12px 0 0;padding:12px 14px;border-radius:12px;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:600;font-size:.9rem}
-.ok{color:var(--p-green);font-weight:600;font-size:.9rem;margin:0 0 10px}
-.rmtable{width:100%;border-collapse:collapse;font-size:.9rem;font-variant-numeric:tabular-nums}
-.rmtable td,.rmtable th{padding:7px 4px;border-bottom:1px solid var(--rule);text-align:left}
-.rmtable th{font-size:.72rem;color:var(--muted);font-weight:600}
-.rmtable td.n{text-align:right;font-weight:700}
-.entry h3{font-size:1rem;font-weight:700;margin:0}
-.entry .day{font-size:.78rem;color:var(--muted);font-weight:600;display:inline-block}
-.entry .day::first-letter{text-transform:uppercase}
-.entry p{margin:6px 0 0;font-size:.9rem}
-.entry p b{font-weight:600}
-.danger{color:var(--p-red)}
-.ver{color:var(--faint);font-size:.75rem;margin-top:18px}
-textarea.field{min-height:120px;resize:vertical;line-height:1.45;font-family:inherit}
-.pzbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 10px}
-.pzbtns .btn{padding:16px 10px;font-size:.95rem}
-.status{font-size:.88rem;color:var(--muted);margin:4px 0 10px;min-height:1.2em}
-.status.err{color:var(--p-red)}
-.tip{font-size:.8rem;color:var(--muted);background:var(--card);border:1px dashed var(--rule);border-radius:12px;padding:10px 12px;margin:0 0 12px}
-.det{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.82rem;color:var(--muted)}
-.det b{color:var(--ink)}
-.heroBtns{display:flex;gap:8px;flex-wrap:wrap}
-.pill.pz{color:var(--p-blue);font-weight:600}
-.pzF{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:var(--bg);font-size:.88rem;white-space:pre-line}
-.pzF b{display:block;font-size:.72rem;color:var(--muted);margin-bottom:2px}
-nav.tabs .n[hidden]{display:none}
 
-@media (prefers-reduced-motion: no-preference){
+/* registro e historial */
+.field{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:12px;background:var(--glass-b);font-variant-numeric:tabular-nums}
+input.field[inputmode]{font-family:var(--f-mono);font-weight:600}
+.field:focus{border-color:var(--accent);outline:none}
+.lbl{display:grid;gap:5px;font-size:.68rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.lbl .field{text-transform:none;letter-spacing:normal;font-size:.92rem;color:var(--ink);font-weight:500}
+.lbl input.field[inputmode]{font-weight:600}
+.form{display:grid;gap:12px}
+.logset{display:grid;grid-template-columns:34px 1fr 1fr 74px;gap:8px;align-items:center;padding:4px 0}
+.logset.hd{font-size:.64rem;color:var(--muted);font-weight:700;padding-bottom:0;text-transform:uppercase;letter-spacing:.07em}
+.logset .s{font:600 .8rem var(--f-mono);color:var(--accent)}
+.logset .prev{font:500 .72rem var(--f-mono);color:var(--muted);text-align:right}
+.two{display:grid;grid-template-columns:1fr 120px;gap:8px}
+.upd{display:block;margin:12px 0 0;padding:12px 14px;border-radius:14px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:.88rem;box-shadow:var(--shadow)}
+.ok{color:var(--good);font-weight:700;font-size:.88rem;margin:0 0 10px}
+.rmtable{width:100%;border-collapse:collapse;font-size:.86rem}
+.rmtable td,.rmtable th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+.rmtable th{font-size:.64rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em}
+.rmtable td.n{text-align:right;font:600 .86rem var(--f-mono)}
+.rmtable td:nth-child(3){font:500 .76rem var(--f-mono);color:var(--muted)}
+.entry h3{font-size:1rem;font-weight:800;margin:0}
+.entry .day{font-size:.66rem;color:var(--accent);font-weight:700;display:inline-block;text-transform:uppercase;letter-spacing:.07em}
+.entry p{margin:6px 0 0;font-size:.88rem}
+.entry p b{font-weight:700}
+.danger{color:var(--bad)}
+.ver{color:var(--faint);font-size:.72rem;margin-top:18px}
+textarea.field{min-height:120px;resize:vertical;line-height:1.5;font:500 .86rem var(--f-mono);text-transform:none;letter-spacing:normal}
+.pzbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 10px}
+.pzbtns .btn{padding:16px 10px;font-size:.92rem}
+.status{font-size:.86rem;color:var(--muted);margin:4px 0 10px;min-height:1.2em}
+.status.err{color:var(--bad)}
+.tip{font-size:.8rem;color:var(--muted);background:var(--glass);border:1px dashed var(--line);border-radius:14px;padding:10px 12px;margin:0 0 12px}
+.det{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:var(--muted)}
+.det b{color:var(--ink)}
+.pill.pz{color:var(--accent);background:var(--accent-soft);border-color:transparent;font-weight:700}
+.pzF{margin:12px 0 0;padding:10px 12px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);font:500 .84rem var(--f-mono);white-space:pre-line}
+.pzF b{display:block;font:700 .64rem var(--f-display);color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em}
+
+@media (prefers-reduced-motion:no-preference){
   .chip,.scheme,.btn,.sheet,nav.tabs button{transition:background .15s,border-color .15s,box-shadow .15s,color .15s}
   .scheme[aria-pressed="true"] .plate{animation:load .3s ease-out both}
   @keyframes load{from{transform:scaleY(.6)}to{transform:none}}
 }
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media (max-width:440px){
   .scheme{grid-template-columns:70px 1fr 22px;gap:10px}
-  .stats{gap:16px}
+  .stat{padding:10px 12px}
+  .stat b{font-size:1.3rem}
+  nav.tabs .l{font-size:.68rem}
 }
+@media (min-width:600px){.heroRow{grid-template-columns:1fr auto;align-items:end}.heroBtns{grid-template-columns:auto auto}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="hero">
-    <p class="eyebrow"><span class="dots" aria-hidden="true"><i style="background:var(--p-red)"></i><i style="background:var(--p-blue)"></i><i style="background:var(--p-yellow)"></i><i style="background:var(--p-green)"></i></span>Tu cuaderno · jun 2025 – nov 2026</p>
-    <h1>¿Qué toca hoy?</h1>
+    <p class="eyebrow"><span class="live" aria-hidden="true"></span><b>Hemeroteca</b> de entrenos</p>
+    <h1>¿Qué toca<em>hoy?</em></h1>
     <div class="heroRow">
       <div class="stats" id="tot"></div>
-      <div class="heroBtns"><button class="btn solid" id="goPiz" type="button">Foto de la pizarra</button><button class="btn" id="randomAll" type="button">Sorpréndeme</button></div>
+      <div class="heroBtns"><button class="btn solid" id="goPiz" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></svg>Foto de la pizarra</button><button class="btn" id="randomAll" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/><path d="m18 14 4 4-4 4"/></svg>Sorpréndeme</button></div>
     </div>
   </header>
   <div id="upd"></div>
@@ -225,7 +251,7 @@ nav.tabs .n[hidden]{display:none}
 
 <script src="xlsx.mini.min.js" onerror="var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.mini.min.js';document.head.appendChild(s)"></script>
 <script>
-/* ---------- FUERZA (bloques con % del cuaderno) ---------- */
+/* ---------- FUERZA (bloques con % del RM) ---------- */
 const S=(f,txt,sets)=>({f,txt,sets}); // sets: [series,reps,%]
 const FUERZA=[
  {g:'Pierna',items:[
@@ -242,7 +268,7 @@ const FUERZA=[
     S('Intensidad','1×3 @85% · 2×3 @90%',[[1,3,85],[2,3,90]]),
     S('Intensidad','2×2 @90% · 2×2 @97%',[[2,2,90],[2,2,97]]),
     S('Test','1×1 @80% · 1×1 @95% · 1×1 @102%',[[1,1,80],[1,1,95],[1,1,102]])]},
-  {id:'fsq',n:'Front squat',d:'Más de martes en 2026. Buena para el clean.',sch:[
+  {id:'fsq',n:'Front squat',d:'Buena para el clean.',sch:[
     S('Volumen','1×5 @50% · 3×5 @60%',[[1,5,50],[3,5,60]]),
     S('Volumen','2×5 @60% · 2×5 @70%',[[2,5,60],[2,5,70]]),
     S('Fuerza','1×5 @70% · 3×3 @82%',[[1,5,70],[3,3,82]]),
@@ -255,7 +281,7 @@ const FUERZA=[
     S('Fuerza','2×5 @75% · 3×5 @80%',[[2,5,75],[3,5,80]])]}
  ]},
  {g:'Cargada',items:[
-  {id:'sqc',n:'Squat clean',d:'Clean completo. Los jueves y en la temporada 2026-27.',sch:[
+  {id:'sqc',n:'Squat clean',d:'Clean completo. Suele tocar los jueves.',sch:[
     S('Volumen','1×5 @60% · 1×5 @65% · 3×5 @70%',[[1,5,60],[1,5,65],[3,5,70]]),
     S('Volumen','1×3 @60% · 1×3 @65% · 4×3 @70%',[[1,3,60],[1,3,65],[4,3,70]]),
     S('Fuerza','4×3 @73%',[[4,3,73]]),
@@ -264,7 +290,7 @@ const FUERZA=[
     S('Intensidad','5×2 @85%',[[5,2,85]]),
     S('Intensidad','1×5 @75% · 1×3 @75% · 3×1 @95%',[[1,5,75],[1,3,75],[3,1,95]]),
     S('Ondulante','5-3-1 subiendo',null)]},
-  {id:'hsc',n:'Hang squat clean',d:'Desde colgado. Tu RM anotado: 92 kg (29-01-26).',sch:[
+  {id:'hsc',n:'Hang squat clean',d:'Desde colgado. Tu RM anotado: 92 kg.',sch:[
     S('Fuerza','2×3 @75% · 2×3 @80%',[[2,3,75],[2,3,80]]),
     S('Fuerza','3×2 @70% · 2×2 @80%',[[3,2,70],[2,2,80]]),
     S('Intensidad','3×2 @80% · 2×2 @88%',[[3,2,80],[2,2,88]]),
@@ -288,7 +314,7 @@ const FUERZA=[
     S('Fuerza','2×3 @85%',[[2,3,85]]),
     S('Intensidad','2×3 @90%',[[2,3,90]]),
     S('Intensidad','2×3 @95%',[[2,3,95]])]},
-  {id:'cj',n:'Clean & jerk',d:'Nuevo en la temporada 2026-27.',sch:[
+  {id:'cj',n:'Clean & jerk',d:'Clean y jerk completo, en un solo movimiento.',sch:[
     S('Fuerza','4×2 @75%',[[4,2,75]]),
     S('Fuerza','4×2 @77%',[[4,2,77]])]}
  ]},
@@ -310,7 +336,7 @@ const FUERZA=[
     S('Intensidad','2×1 @65% · 1×1 @75% · 2×1 @92%',[[2,1,65],[1,1,75],[2,1,92]]),
     S('Intensidad','Cada 2\' × 6: 2 sets @75% · 2 @80% · 2 @85%',[[2,1,75],[2,1,80],[2,1,85]])]}
  ]},
- {g:'Bisagra',items:[
+ {g:'Peso muerto',items:[
   {id:'dl',n:'Deadlift',d:'Peso muerto de los miércoles.',sch:[
     S('Volumen','3×5',null),
     S('Volumen','1×5 @77% · 1×5 @82% · 2×1 @95%',[[1,5,77],[1,5,82],[2,1,95]]),
@@ -352,7 +378,7 @@ const FUERZA=[
  ]}
 ];
 
-/* ---------- ACCESORIOS (superseries del cuaderno) ---------- */
+/* ---------- ACCESORIOS (superseries) ---------- */
 const ACC=[
  {z:'Brazos',n:'Hammer curl + Extensión por encima de la cabeza',r:'12-10-8'},
  {z:'Brazos',n:'Curl con barra + Press francés',r:'12-10-8'},
@@ -391,194 +417,194 @@ const ACC=[
 
 /* ---------- WODs ---------- */
 const W=[];
-function M(n,f,fmt,min,cat,fl,lines,rx){W.push({n,f,fmt,min,cat,v:fl.includes('v'),named:fl.includes('n'),lines,rx})}
-M('Hulk','26-06-25','AMRAP',15,'fuerza','n',['5 deadlift','5 hang power clean','5 front squat','5 push press','5 back squat'],'Subiendo peso: 2 rondas a 40 · 2 a 50 · 1 a 60 · 1 a 70 kg');
-M('','23-06-25','AMRAP',6,'mixto','',['8 front squat','20 crunch','8 push press','20 crunch'],'');
-M('','25-06-25','Rondas',12,'mixto','',['4 rondas:','8 deadlift','15 goblet squat','15 ring row'],'');
-M('','30-06-25','Rondas',10,'cardio','',['3 rondas:','8 reverse lunges','8 wall ball','6 burpee'],'');
-M('','30-06-25','AMRAP',6,'mixto','',['8 deadlift','8 alt KB snatch','5-8 chin up'],'');
-M('','01-07-25','Rondas',12,'cardio','',['3 rondas:','6 box jump','8 KB push press','12 squat','9-12 push up','8 KB swing'],'KB 24-16');
-M('','02-07-25','AMRAP',6,'fuerza','',['7 hang clean & jerk','12 skull push up'],'');
-M('','03-07-25','EMOM',10,'fuerza','',['Min 0-4: 15 squat + máx sumo high pull','Min 4-6: descanso','Min 6-10: 7 burpee + máx power clean'],'Barra 50-30 / 60-45');
-M('','07-07-25','AMRAP',12,'mixto','',['12 deadlift','9 hang clean','6 push press','4-6 pull up','9 push up','12 jump squat'],'2 KB · 48-32 kg en total');
-M('','10-07-25','Rondas',15,'gimnastico','',['3 rondas:','6 front squat','4-7 pull up','10 KB clean & jerk','16-20 diamond push up','30 DU','4 muscle up'],'Barra 60-40 · KB 24-16');
-M('','14-07-25','AMRAP',10,'mixto','',['8 hang clean','8 goblet squat','20 crunch'],'Barra 40 · KB 24 (5 rondas)');
-M('','15-07-25','Rondas',10,'cardio','',['3 rondas:','7 deadlift','11-14 push up','15 leg lifts','7 burpee'],'');
-M('','16-07-25','AMRAP',5,'mixto','',['7 push press','14 reverse lunges'],'Barra 40-25 · KB 40-24');
-M('','21-07-25','For Time',8,'mixto','',['20-15-10:','Push press','Sit up','Hand release push up'],'Barra 40-25');
-M('','21-07-25','AMRAP',12,'mixto','',['3 × AMRAP 4\':','8 wall ball','10 supine row','8 reverse lunges'],'Barra 50-30');
-M('','22-07-25','Rondas',8,'cardio','',['3 rondas:','10 med ball sit up','40 mountain climbers en balón','20 DU'],'');
-M('Test 5\'','24-07-25','Rondas',10,'cardio','n',['3 × 60" máx reps (mismo descanso):','Pull up','Wall ball','Burpee over DB'],'');
-M('','24-07-25','Rondas',12,'fuerza','',['3 rondas:','Hang clean (R1 8×60-35 · R2 6×70-45 · R3 4×80-55)','10 T2B','15-20 push up'],'');
-M('Test máx reps','04-08-25','Rondas',10,'mixto','n',['3 × 30" on / 30" off pull up','60" hang clean (60-35)','3 × 30" on / 30" off burpee plate','Máx plank'],'');
-M('','01-09-25','AMRAP',5,'mixto','',['7 power clean','9 wall ball','15 crunch'],'3 rondas');
-M('','02-09-25','Rondas',10,'mixto','',['3 rondas:','7 deadlift','14 KB hang clean','10-14 KB push up'],'Barra 60-45');
-M('','03-09-25','AMRAP',5,'fuerza','',['5 split clean & jerk','12 gorilla row','6 T2B'],'Barra 40-25');
-M('','04-09-25','AMRAP',5,'mixto','',['8 deadlift','6 hang clean','4 front squat','7-10 chin up'],'2 KB 40-24');
-M('','08-09-25','AMRAP',5,'mixto','',['7 deadlift','11 wall ball'],'');
-M('','09-09-25','Rondas',10,'cardio','',['3 rondas:','7 power clean','15-20 push up','15 jump squat'],'Barra 40-25');
-M('','10-09-25','AMRAP',10,'cardio','',['6 box jump','6 KB push press','16 lunges (sin peso)','6 KB hang clean','40 mountain climbers','6 KB hang snatch'],'KB 24-16');
-M('','11-09-25','EMOM',10,'fuerza','',['Min 0-4: 18 squat + máx sumo high pull','Min 4-6: descanso','Min 6-10: 15-10 push up + máx power clean'],'Sumo 50-35 · Power clean 60-45');
-M('','15-09-25','AMRAP',6,'mixto','',['7 deadlift','10 gorilla row','12 wall ball'],'Barra 60-45');
-M('','25-09-25','Rondas',17,'mixto','',['3 rondas (TC 17\'):','8 burpee deadlift','14 double row','8 front squat','11-14 push up','8 step','9-14 pull up'],'');
-M('','29-09-25','AMRAP',6,'mixto','',['7 front squat','10 KB swing','13 wall ball'],'');
-M('','30-09-25','AMRAP',6,'mixto','',['7 push press','7 goblet squat','14 KB push up'],'Barra 40-25 · KB 20-12');
-M('','02-10-25','Rondas',15,'cardio','',['3 rondas (TC 15\'):','10 deadlift','10 burpee','30 DU','10 KB thruster','15-20 skull push up'],'Barra 70-55 · KB 40-24');
-M('','06-10-25','Rondas',11,'mixto','',['3 rondas (TC 11\'):','7 deadlift','15-20 push up','7 hang clean','20 mountain climbers','7 front squat'],'2 KB 48-36');
-M('','07-10-25','For Time',9,'gimnastico','',['4 rondas (TC 9\'):','7-10 pull up','20 push up','30 squat'],'');
-M('','07-10-25','Rondas',10,'cardio','',['3 rondas:','9 sumo high pull','10 burpee','14 KB hang snatch'],'');
-M('','08-10-25','For Time',11,'cardio','',['100 m run','20 wall ball','100 m run','30 KB lunges','100 single unders'],'');
-M('','13-10-25','For Time',4,'cardio','',['30 DU','50 wall ball'],'');
-M('','13-10-25','Rondas',8,'cardio','',['3 rondas (8\'):','8 sumo high pull','6 burpee','8 reverse lunges','6 burpee'],'KB 48-32');
-M('','15-10-25','For Time',10,'cardio','',['20 box jump','20 KB clean & press','Descanso 60"','20 alt KB snatch','100 mountain climbers cross'],'Cajón 75/60 cm');
-M('','20-10-25','AMRAP',4,'mixto','',['7 hang clean','10 gorilla row','15 crunch'],'Barra 40-24');
-M('','20-10-25','Rondas',8,'fuerza','',['3 rondas:','60" iso deadlift','12 squat','Descanso','Penalización: burpees si sueltas'],'Barra 70-55');
-M('','21-10-25','For Time',8,'cardio','',['30-40 push up','40 KB swing','40 wall ball'],'KB 20-16 · TC 8\'');
-M('','21-10-25','AMRAP',6,'mixto','',['6 hang squat clean','8 KB push press','14 sit up'],'Barra 50-35 · KB 40-24');
-M('','22-10-25','For Time',6,'cardio','',['30 burpee','Luego 3 rondas: 5 pull up · 10 push up · 15 squat'],'');
-M('EMOM 24','23-10-25','EMOM',24,'fuerza','n',['4\': 8 alt KB snatch + máx bent over','2\' descanso','4\': 10 KB swing + máx hang clean','2\' descanso','4\': 12-15 push up + máx front squat','2\' descanso','4\': 15 jump squat + máx sumo high pull'],'Barra 50-30 · KB 20-12');
-M('','27-10-25','For Time',8,'cardio','',['30 med ball squat','30" descanso','30 KB swing','30" descanso','30 med ball sit up'],'');
-M('','27-10-25','Rondas',10,'mixto','',['3 rondas:','7 hang clean','10 plate ground to overhead','10 ring row','2 med ball clean'],'Barra 40-24 · Disco 20-15');
-M('','28-10-25','For Time',9,'gimnastico','',['5 rondas:','5-7 incline push up','5-7 push up','5-7 decline push up'],'');
-M('','28-10-25','AMRAP',6,'mixto','',['7 push press','7 front squat','20 DU'],'Barra 40-25');
-M('','29-10-25','For Time',12,'cardio','',['15 sumo high pull','20 KB lunges','30 russian swing','20 reverse lunges','60 russian twist'],'');
-M('','30-10-25','AMRAP',20,'cardio','v',['10 step','20 box push up','10 KB hang clean','10 burpee','10 double row','6-10 pull up'],'2 KB 20-12 · chaleco 9-6 kg');
-M('','03-11-25','For Time',8,'cardio','',['1-2-3-4-5-6:','KB hang squat clean','Burpee over KB'],'KB 48-32');
-M('','04-11-25','AMRAP',19,'mixto','v',['10 hang clean','11-14 dips','10 back squat','14 diamond push up','200 m run'],'Barra 50-30 · chaleco');
-M('','05-11-25','Rondas',10,'fuerza','',['3 rondas (TC 10\'):','15 deadlift','20 KB swing','15 bent over'],'Barra 60-45 · KB 24-20');
-M('','06-11-25','EMOM',10,'fuerza','',['Min 0-4: 15 squat + máx KB snatch','Min 4-6: descanso','Min 6-10: 15 push up + máx power clean'],'KB 20/12 · Barra 70/45');
-M('','06-11-25','Rondas',12,'fuerza','',['3 rondas:','Sumo high pull (R1 8×50-30 · R2 6×60-35 · R3 4×70-45)','7-10 pull up','30 DU'],'');
-M('','10-11-25','Rondas',8,'mixto','',['3 rondas:','8 KB hang clean','15 wall ball'],'KB 40-24');
-M('','11-11-25','AMRAP',19,'mixto','v',['7 thruster','20-24 KB push up','10 KB reverse lunges','5-7 burpee pull up','200 m run'],'Barra 40-25 · KB 40-24 · chaleco');
-M('','12-11-25','Rondas',8,'fuerza','',['3 rondas:','5 hang clean & jerk','5-7 chin up'],'Barra 50-30');
-M('','13-11-25','For Time',8,'gimnastico','',['21-15-9:','Dips','Hand release push up'],'');
-M('','13-11-25','Rondas',10,'mixto','',['3 rondas:','7 front squat','11 T2B','7 burpee'],'');
-M('','18-11-25','AMRAP',18,'cardio','v',['7 sumo high pull','3-5 pull up','8 KB hang snatch','7-10 push up','8 KB hang clean','15 squat','Cada 2\': 4 burpee'],'Chaleco 9-6 kg');
-M('','19-11-25','AMRAP',5,'mixto','',['6 box jump','7 deadlift','8 KB clean & jerk'],'KB 20-12');
-M('','20-11-25','Rondas',10,'fuerza','',['3 rondas: 2 bear complex · 4-7 pull up','3 rondas: 6 devil press · 12 alt DB lunges','3 rondas: 5 hang squat clean · 10 double row'],'DB 22-15 · 2 KB');
-M('','24-11-25','For Time',10,'gimnastico','',['20 T2B','30 push up','15 T2B','20 squat','10 T2B','10 pull up'],'');
-M('','25-11-25','AMRAP',17,'mixto','v',['10 box jump','8 floor press','25 box dips','8 push press','12 reverse lunges','19-25 box incline push up'],'40-24 kg · chaleco');
-M('','26-11-25','For Time',10,'cardio','',['20-15-10:','Burpee','KB swing','+ 30 DU'],'');
-M('','26-11-25','Rondas',10,'fuerza','',['3 rondas: 10 push press · 10 front squat (40-25)','3 rondas: 4 clean & jerk (60-40) · 8-11 pull up'],'');
-M('','01-12-25','Rondas',10,'fuerza','',['3 rondas: 7 hang clean · 20-25 push up','3 rondas: 8 zercher · 8 push press · 12 med ball sit up'],'Barra 50-30 / 50-35');
-M('','02-12-25','AMRAP',12,'mixto','v',['AMRAP 7\': 7 deadlift · 12 jump squat · 11-15 ring row','Descanso','AMRAP 5\': 8 box jump · 8 KB thruster · 10 ring dips'],'Chaleco');
-M('','04-12-25','For Time',10,'gimnastico','',['Strict pull up unbroken 10-9-8-…-1','Escalera 1→8: DB snatch + burpee'],'DB 25-17,5');
-M('','09-12-25','AMRAP',16,'mixto','v',['7 hang squat clean','5-8 chin up','10 front KB lift','16-20 diamond push up','5 cluster','20 curl cup'],'Barra 40-25 · KB 20-12 · chaleco 9-6');
-M('','24-12-25','Rondas',12,'fuerza','',['4 rondas: hang squat clean + 12-15 push up','R1 7×60-35 · R2 5×70-45 · R3 3×80-55 · R4 1×90-65'],'');
-M('','24-12-25','Rondas',10,'cardio','',['3 rondas:','12 step up','8 double clean','8 burpee'],'40-24');
-M('','29-12-25','EMOM',10,'gimnastico','',['Impar: 6-10 pull up','Par: 30" hollow hold'],'');
-M('','29-12-25','AMRAP',5,'mixto','',['12 wall ball','9 T2B','6 KB step box'],'KB 48-32');
-M('','14-01-26','AMRAP',13,'mixto','v',['9-12 ring row','6 hang squat clean','12-15 HR push up','8 KB reverse lunges','8 hang squat clean'],'Barra 40-25 · chaleco 9-6');
-M('Atenea','15-01-26','Rondas',15,'fuerza','n',['3 rondas: 10 KB thruster · 10 burpee','3 rondas: 10 front squat · 20-30 push up','3 rondas: 5 squat clean · 10-15 dips'],'KB 40-24 · FS 50-35 · SC 70-45');
-M('','20-01-26','AMRAP',10,'cardio','v',['8 push press','8 KB goblet squat','5-8 pull up','10 KB hang snatch','16 jump squat'],'Barra 40-25 · KB 20-12 · chaleco');
-M('Partner','21-01-26','Rondas',10,'cardio','n',['3 rondas por parejas:','10 KB step','8 burpee'],'KB 40-24');
-M('Kratos','22-01-26','Rondas',20,'mixto','n',['3 rondas:','15 KB floor press','50 DU','10 power clean','20 T2B','8 front squat','50 DU','Luego: 100/75 push up'],'KB 40-24 · Barra 50-30');
-M('Artemisa','29-01-26','Rondas',20,'mixto','n',['3 rondas:','6 hang squat clean','8-12 pull up','20 KB swing','12 alt box step','8 devil press','Luego: 80 reverse lunges'],'Barra 60-40 · KB 24-16');
-M('','02-02-26','Rondas',12,'gimnastico','',['3 rondas (TC 4\' cada una):','7 front squat','7 T2B','7-10 push up'],'Barra 50-35');
-M('','03-02-26','AMRAP',14,'mixto','v',['8 push press','11-15 skull push up','10 box step','15-20 incline push up','8 back squat'],'Barra 40-25 · KB 40-24 · chaleco');
-M('','04-02-26','AMRAP',5,'mixto','',['6 deadlift','8 KB hang clean','20 mountain climbers'],'Barra 70-55');
-M('Sirenas','05-02-26','Rondas',20,'cardio','n',['3 rondas:','15 KB sumo squat','15 KB curl cup','20 jump squat','10 KB push press','9-15 pull up','10 KB hang squat clean','Luego: 100 KB swing (penalización 5 burpee)'],'KB 20-12');
-M('','09-02-26','AMRAP',5,'mixto','',['6 hang clean','8 reverse lunges'],'Barra 40-25 · KB 40-24');
-M('','10-02-26','AMRAP',13,'cardio','v',['10 plate ground to overhead','10 supine row','15 plate plyo jumping jacks','10 zercher','8-10 plate plyo push up','15 plate jumping jacks'],'Disco 20-15 · Barra 50-35 · chaleco');
-M('','11-02-26','Rondas',10,'fuerza','',['3 rondas:','7 hang clean & jerk','7 box jump','7 front squat','7-10 ring row'],'Barra 40-25');
-M('EMOM 22','12-02-26','EMOM',22,'fuerza','n',['4\': 10 alt KB clean + máx bent over','2\' descanso','4\': 10 KB swing + máx sumo high pull','2\' descanso','4\': 15-10 HR push up + máx back squat','2\' descanso','4\': 15 air squat + máx power clean'],'KB 24-16 · Barra 50-30 / 60-35');
-M('','16-02-26','Rondas',10,'mixto','',['3 rondas KB: 7 push press · 7 front squat · 7 double swing · 30" descanso','10-15 pull up','30 T2B'],'2 KB 40-24');
-M('','17-02-26','AMRAP',9,'mixto','v',['8 KB box step','8 KB hang clean & jerk','8-10 skull push up','8 KB goblet squat'],'KB 24-16 · chaleco');
-M('','18-02-26','AMRAP',8,'mixto','',['7 sumo high pull','10 wall ball'],'Barra 50-30');
-M('','23-02-26','AMRAP',13,'cardio','',['100 m run','4 hang clean','7 T2B','100 m run','4 hang squat clean','8 DB push press','Luego: 1 rope climb'],'DB 20-12');
-M('','24-02-26','AMRAP',13,'mixto','v',['6 power clean','9-12 ring row','6 box jump','6 bent over','20 lunges','6 burpee','Luego: 1 milla corriendo'],'Chaleco');
-M('La Hidra de Lerna','26-02-26','AMRAP',16,'mixto','n',['9 power clean','10 alt devil press','8-11 pull up','12 KB goblet squat','13 push up','Luego: complex (bent over + deadlift + squat clean)'],'Barra 50-30');
-M('','02-03-26','AMRAP',5,'mixto','',['8 T2B','5 hang clean'],'Barra 60-40');
-M('','03-03-26','AMRAP',13,'mixto','v',['7 KB thruster','10-14 skull push up','7 KB hang clean','7 burpee broad jump plate','14 reverse lunges','Luego 21-15-9: jump squat · double row · curl cup'],'KB 40-24 · chaleco');
-M('','04-03-26','Rondas',10,'fuerza','',['3 rondas:','7 deadlift','10 hang KB snatch'],'Barra 70-55 · KB 20-12');
-M('Open 26.1','05-03-26','For Time',12,'cardio','n',['20 wall ball','18 box jump over','30 wall ball','18 box jump over','40 wall ball','18 ball box step over','66 wall ball','18 ball box step over','40 · 18 · 30 · 18 · 20 wall ball'],'TC 12\'');
-M('','09-03-26','Rondas',12,'fuerza','',['3 rondas: 7 push press · 7 front squat · 6 burpee','2\' descanso','3 rondas: 7 power clean · 5 front squat · 4 devil press'],'Barra 40-25 / 50-35 · DB 25-15');
-M('','10-03-26','AMRAP',14,'mixto','v',['6 hang squat clean','8-5 pull up','14 gorilla row','8-5 dips','20 plate jumping jacks'],'Barra 50-35 · KB 48-32 · chaleco');
-M('Open 26.2','12-03-26','For Time',15,'gimnastico','n',['24 KB lunges','20 DB snatch','20 pull up','24 KB lunges','20 DB snatch','20 chest to bar','24 KB lunges','20 DB snatch','20 muscle up'],'TC 15\'');
-M('','16-03-26','For Time',10,'fuerza','',['21-15-9:','Hang squat clean','T2B','Box jump'],'Barra 60-40 → 70-45 → 80-55');
-M('KB WOD','17-03-26','Rondas',13,'mixto','nv',['3 rondas (TC 13\'):','10 bent over','4-8 chin up','8 sumo high pull','10 wall ball','6 hang clean jerk','8 burpee'],'KB 40-24 · chaleco');
-M('Open 26.3','18-03-26','For Time',16,'fuerza','n',['2 rondas: 12 burpee over bar · 12 clean · 12 burpee OB · 12 thruster (40-25)','2 rondas igual (50-30)','2 rondas igual (60-35)'],'TC 16\'');
-M('EMOM 22 (II)','23-03-26','EMOM',22,'fuerza','n',['4\': 10 hang KB clean + máx bent over','2\' descanso','4\': 5 burpee + máx sumo high pull','2\' descanso','4\': 9-11 HR push up + máx squat clean','2\' descanso','4\': 15 squat + máx power clean'],'Barra 50-35 / 60-45');
-M('','24-03-26','For Time',15,'cardio','',['21-15-9 (TC 20\'):','Wall ball','KB swing','Box jump','2\' descanso','3 rondas: 8 KB thruster · 8 burpee over KB'],'KB 24-16 / 40-24');
-M('Sierra (Hero)','26-03-26','For Time',30,'mixto','nv',['1 milla corriendo','36 floor press','3 rondas: 27 HR push up · 14 KB hang clean & jerk · 24 pull up'],'KB 40-24 · chaleco 10-7 kg');
-M('Deka WOD','30-03-26','For Time',30,'cardio','n',['500 m run ×2','30 lunges','500 m remo','20 step','30 sit up','200 m carry','20 med ball','500 m run ×2','20 burpee'],'');
-M('','31-03-26','AMRAP',12,'mixto','v',['8 front squat','8 plate ground to overhead','5-8 pull up','10 plate plyo squat','10 plate plyo push up','8 hang clean'],'Barra 40-25 · chaleco');
-M('','01-04-26','Rondas',9,'cardio','',['3 rondas:','7 power clean','9 wall ball','11 KB swing'],'Barra 40-25 · KB 20-16');
-M('','02-04-26','For Time',17,'cardio','',['50-40-30-20-10:','KB russian swing','DU 100-80-60-40-20 (o single unders ×3)'],'TC 17\'');
-M('','07-04-26','AMRAP',9,'fuerza','',['6 bent over','8 deadlift','6 hang clean','20 DU'],'Barra 50-35');
-M('','08-04-26','For Time',15,'gimnastico','',['60 pull up','80 push up','120 squat'],'');
-M('','08-04-26','For Time',6,'fuerza','',['20-15-10 (TC 6\'):','Landmine squat','Russian swing'],'40-25 · KB 24-20');
-M('','09-04-26','Rondas',15,'gimnastico','',['3 rondas:','15 box dips','9 KB deadlift','16-20 ring row','7 KB push press','12-15 box incline push up','5 ring dips','10 burpee'],'');
-M('','10-04-26','AMRAP',6,'cardio','',['7 sumo high pull','9 wall ball','11 KB swing','13 sit up'],'');
-M('Complex máx','13-04-26','AMRAP',10,'fuerza','n',['Busca tu máximo de complex:','2 deadlift','1 hang clean','2 bent over','4-6 pull up'],'');
-M('','14-04-26','AMRAP',15,'fuerza','v',['6 push press','6 back squat','2 Cindy','6 push jerk','6 front squat','2 Cindy'],'Barra 40-25 · chaleco · Cindy = 5 pull up + 10 push up + 15 squat');
-M('','16-04-26','Rondas',10,'cardio','',['3 rondas:','12 step alterno','8 double hang clean','8 burpee'],'KB 40-24');
-M('','20-04-26','Rondas',12,'mixto','',['3 rondas KB:','7 deadlift','16-20 push up','7 hang clean','40 mountain climbers','7 front squat'],'');
-M('','21-04-26','AMRAP',12,'cardio','',['7 hang clean & jerk','12 squat','14 KB swing','12 jump squat','4-8 pull up','10 lunges','10-14 diamond push up','10 jumping lunges'],'Barra 40-25 · KB 20-16');
-M('','22-04-26','AMRAP',5,'fuerza','',['9 deadlift','8 DB alt snatch'],'Barra 60-45 (4 rondas)');
-M('','23-04-26','For Time',11,'cardio','',['200 m run','20 wall ball','200 m run','30 KB lunges','200 m run','100 DU'],'TC 11\'');
-M('','30-04-26','For Time',20,'cardio','',['25 reverse lunges','25 med ball sit up','20 box step over','20 med ball','200 m carry','200 m run entre ejercicios'],'Balón 50-30');
-M('','30-04-26','For Time',5,'cardio','',['KB hang squat clean 1-2-3-4-5-6','Burpee overhead 6-5-4-3-2-1'],'KB 40-24');
-M('','04-05-26','Rondas',10,'gimnastico','',['3 rondas: 1× curl 21 · 15 T2B · 6-9 pull up','3 rondas: 5 power clean · 7 goblet squat · 6-9 dips'],'');
-M('','05-05-26','AMRAP',12,'mixto','',['10 sumo squat déficit','7-10 plyo push up','8 hang clean','15 squat','8 push press','4-6 chin up'],'2 KB 40-24');
-M('','12-05-26','For Time',12,'cardio','',['600 m run','20 box step','20 med ball sit up','20 DB burpee'],'');
-M('','12-05-26','Rondas',8,'mixto','',['3 rondas:','16 KB thruster','6-10 pull up'],'KB 40-24');
-M('','05-26','AMRAP',10,'mixto','',['6 power clean','5 pull up','6 front squat','10 push up','10 supine row','15 squat'],'Barra 40-25');
-M('','08-06-26','Rondas',10,'mixto','',['3 rondas: 8 T2B · 14 alt KB snatch','3 rondas: 8 deadlift · 10 wall ball · 12 KB swing'],'Barra 60-45');
-M('','09-06-26','AMRAP',12,'gimnastico','v',['7-10 push up','6 push press','7-10 HR push up','6 back squat','7-10 diamond push up','6 hang clean','7-10 skull push up','10 ring row'],'Barra 40-25 · chaleco 9-6');
-M('Aniversario','13-06-26','Rondas',15,'fuerza','n',['2-4… hasta 12 …4-2: KB goblet squat + push up','AMRAP 3\': 10 russian swing · 10 sit up','3 rondas: squat clean + 14 KB hang clean','R1 5×70-45 · R2 3×80-55 · R3 1×90-65'],'KB 24-16');
-M('','15-06-26','AMRAP',7,'mixto','',['7 power clean','7-10 HR push up','10 KB hang snatch','5-7 pull up'],'Barra 50-35 · KB 20-12');
-M('KB WOD (II)','16-06-26','AMRAP',13,'cardio','nv',['8 sumo high pull','10 jump squat','8 hang clean','20 alt lunges','10 step','6-9 pull up'],'KB 48-32 · chaleco');
-M('','25-06-26','AMRAP',11,'mixto','v',['6 power clean','6-10 push up','8 KB goblet squat','6 T2B','8 KB alt snatch','10 KB reverse lunges'],'Chaleco 9-6 kg');
-M('','06-26','For Time',12,'gimnastico','',['21 pull up · 40 DU · 21 thruster','18 chin up · 35 DU · 18 thruster','30 ring row · 30 DU · 15 thruster'],'Barra 40-25');
-M('','29-06-26','For Time',15,'gimnastico','',['25 pull up','20 hang clean','15 burpee pull up','20 deadlift','5 muscle up'],'Barra 50-35 / 60-45');
-M('','30-06-26','AMRAP',12,'mixto','v',['6 power clean','6-10 dips','8 back squat','10-12 diamond push up','200 m run'],'Barra 40-25 · chaleco 9-6');
-M('300 Leónidas','08-26','For Time',30,'mixto','n',['25 pull up','50 deadlift','50 HR push up','50 box jump','50 alt KB clean & jerk','50 KB alt lunges','25 pull up'],'KB 24-16 · Barra 60-45');
-M('','08-26','AMRAP',11,'mixto','',['6-9 pull up','10 KB hang clean','10 KB box step','10 KB push press','16 decline push up','16 KB reverse lunges'],'KB 24-16');
-M('','08-26','Rondas',10,'fuerza','',['3 rondas:','7 hang clean','10 squat','5-7 pull up'],'Barra 50-35');
-M('','01-09-26','Rondas',10,'cardio','',['3 rondas:','20 alt hang DB snatch','15 wall ball','10 sumo high pull'],'DB 20-12 · Barra 40-25');
-M('','03-09-26','AMRAP',20,'cardio','',['5-8 pull up','10 DB hang clean & jerk','200 m run','10 box jump','14-20 incline push up','200 m run','14 DB lunges','10-14 decline push up','200 m run'],'');
-M('','10-09-26','AMRAP',20,'cardio','',['10 KB hang clean','20 KB reverse lunges','200 m run','10 med ball sit up','8 burpee','200 m run','16 box step over','20 box dips','200 m run'],'');
-M('Hang power clean escalonado','14-09-26','EMOM',12,'fuerza','',['3 hang power clean cada minuto','Sube peso cada 4\': 60-35 → 70-45 → 80-55'],'');
-M('','17-09-26','For Time',10,'fuerza','',['Power clean 6-4-2-1 + 1 ronda de Cindy tras cada serie','6×60-35 · 4×70-45 · 2×80-55 · 1×90-65'],'');
-M('','17-09-26','For Time',8,'cardio','',['20-16-12:','Alt KB step','KB push press'],'KB 24-16');
-M('','24-09-26','AMRAP',18,'cardio','',['200 m run','6 deadlift','10 alt gorilla row','10 alt KB lunges','200 m run','3-5 pull up','10 KB hang clean','10 jumping lunges'],'KB 40-24');
-M('','28-09-26','AMRAP',5,'fuerza','',['5 power clean','5 front squat','5 burpee','Luego 3 rondas: 10 KB clean · 20 KB split squat'],'5 rondas');
-M('','29-09-26','Rondas',10,'mixto','',['3 rondas: 6 clean & press (50-30) · 8 T2B · 8-10 skull push up','2\' descanso','3 rondas: 6 devil press (22-17) · 16 sit up'],'');
-M('The 7 push up','01-10-26','For Time',12,'gimnastico','n',['7 rondas:','7 decline push up','7 push up','7 incline push up','30" descanso'],'TC 12\'');
-M('','01-10-26','For Time',12,'mixto','',['20-15-10: pull up · goblet squat','3 rondas (TC 8\'): 1 bear complex · 5 burpee · 30 DU'],'Barra 60-40');
-M('','05-10-26','For Time',8,'mixto','',['KB hang squat clean 2-4-6-8-10-12','HR push up 12-10-8-6-4-2'],'TC 8\'');
-M('','06-10-26','Rondas',3,'fuerza','',['3 rondas (TC 3\'):','8 deadlift','6 burpee'],'Barra 70-55');
-M('','06-10-26','Rondas',9,'mixto','',['3 rondas:','6 bent over','8 KB swing','10 ring row'],'Barra 50-30 · KB 20-16');
-M('','13-10-26','Rondas',10,'fuerza','',['3 rondas: power clean + 4-7 pull up','R1 10×50-30 · R2 7×60-35 · R3 5×70-45'],'');
-M('','13-10-26','For Time',8,'cardio','',['30 box step','30 med ball sit up','30 reverse lunges'],'');
-M('','14-10-26','Rondas',12,'mixto','',['3 rondas (TC 12\'):','8 KB hang cluster','12-16 HR push up','16 KB gorilla row','16 sit up','32 box dips'],'KB 40-24');
-M('','15-10-26','AMRAP',30,'cardio','',['200 m run','10 KB clean','20 box step','200 m run','20 KB reverse lunges','20 wall ball','200 m run','4 med ball clean','90" KB iso deadlift'],'~3 rondas');
-M('','20-10-26','Rondas',12,'fuerza','',['6 rondas:','Complex: 1 deadlift + 1 power clean + 1 squat clean','6 devil press','7-10 pull up'],'Barra 2×50-30 · 2×60-35 · 2×70-45');
-M('','22-10-26','For Time',6,'cardio','',['20 wall ball','40 mountain climbers','30 DU'],'');
-M('','22-10-26','AMRAP',16,'mixto','',['9 deadlift','12 sit up','9 KB hang clean','10-12 ring row','200 m run'],'Barra 60-45 · KB 40-24');
-M('','02-11-26','For Time',8,'gimnastico','',['20-15-10:','Pull up','Push up','Squat'],'');
-M('','02-11-26','Rondas',10,'mixto','',['3 rondas:','8 deadlift','16 gorilla row','32 sit up'],'Barra 60-45 · KB 48-32');
-M('','03-11-26','AMRAP',14,'mixto','',['16 KB step','20 crunch','10 KB double hang clean','12 T2B','10 KB double row','14-20 KB deficit push up','32 mountain climbers'],'~3 rondas');
-M('','05-11-26','AMRAP',12,'fuerza','',['7-10 pull up','3 squat clean','10 wall ball'],'Barra 70-45');
-M('','09-11-26','AMRAP',9,'mixto','',['6 box jump','10 KB shoulder press','6-8 pull up','10 alt KB row','12 skull push up'],'KB 24-16');
-M('','10-11-26','AMRAP',14,'gimnastico','',['Escalera 2-4-6-8-10…:','Pull up','T2B','Devil press','DB hang squat clean'],'DB 22,5-15');
+function M(n,fmt,min,cat,fl,lines,rx){W.push({n,fmt,min,cat,v:fl.includes('v'),named:fl.includes('n'),lines,rx})}
+M('Hulk','AMRAP',15,'fuerza','n',['5 deadlift','5 hang power clean','5 front squat','5 push press','5 back squat'],'Subiendo peso: 2 rondas a 40 · 2 a 50 · 1 a 60 · 1 a 70 kg');
+M('','AMRAP',6,'mixto','',['8 front squat','20 crunch','8 push press','20 crunch'],'');
+M('','Rondas',12,'mixto','',['4 rondas:','8 deadlift','15 goblet squat','15 ring row'],'');
+M('','Rondas',10,'cardio','',['3 rondas:','8 reverse lunges','8 wall ball','6 burpee'],'');
+M('','AMRAP',6,'mixto','',['8 deadlift','8 alt KB snatch','5-8 chin up'],'');
+M('','Rondas',12,'cardio','',['3 rondas:','6 box jump','8 KB push press','12 squat','9-12 push up','8 KB swing'],'KB 24-16');
+M('','AMRAP',6,'fuerza','',['7 hang clean & jerk','12 skull push up'],'');
+M('','EMOM',10,'fuerza','',['Min 0-4: 15 squat + máx sumo high pull','Min 4-6: descanso','Min 6-10: 7 burpee + máx power clean'],'Barra 50-30 / 60-45');
+M('','AMRAP',12,'mixto','',['12 deadlift','9 hang clean','6 push press','4-6 pull up','9 push up','12 jump squat'],'2 KB · 48-32 kg en total');
+M('','Rondas',15,'gimnastico','',['3 rondas:','6 front squat','4-7 pull up','10 KB clean & jerk','16-20 diamond push up','30 DU','4 muscle up'],'Barra 60-40 · KB 24-16');
+M('','AMRAP',10,'mixto','',['8 hang clean','8 goblet squat','20 crunch'],'Barra 40 · KB 24 (5 rondas)');
+M('','Rondas',10,'cardio','',['3 rondas:','7 deadlift','11-14 push up','15 leg lifts','7 burpee'],'');
+M('','AMRAP',5,'mixto','',['7 push press','14 reverse lunges'],'Barra 40-25 · KB 40-24');
+M('','For Time',8,'mixto','',['20-15-10:','Push press','Sit up','Hand release push up'],'Barra 40-25');
+M('','AMRAP',12,'mixto','',['3 × AMRAP 4\':','8 wall ball','10 supine row','8 reverse lunges'],'Barra 50-30');
+M('','Rondas',8,'cardio','',['3 rondas:','10 med ball sit up','40 mountain climbers en balón','20 DU'],'');
+M('Test 5\'','Rondas',10,'cardio','n',['3 × 60" máx reps (mismo descanso):','Pull up','Wall ball','Burpee over DB'],'');
+M('','Rondas',12,'fuerza','',['3 rondas:','Hang clean (R1 8×60-35 · R2 6×70-45 · R3 4×80-55)','10 T2B','15-20 push up'],'');
+M('Test máx reps','Rondas',10,'mixto','n',['3 × 30" on / 30" off pull up','60" hang clean (60-35)','3 × 30" on / 30" off burpee plate','Máx plank'],'');
+M('','AMRAP',5,'mixto','',['7 power clean','9 wall ball','15 crunch'],'3 rondas');
+M('','Rondas',10,'mixto','',['3 rondas:','7 deadlift','14 KB hang clean','10-14 KB push up'],'Barra 60-45');
+M('','AMRAP',5,'fuerza','',['5 split clean & jerk','12 gorilla row','6 T2B'],'Barra 40-25');
+M('','AMRAP',5,'mixto','',['8 deadlift','6 hang clean','4 front squat','7-10 chin up'],'2 KB 40-24');
+M('','AMRAP',5,'mixto','',['7 deadlift','11 wall ball'],'');
+M('','Rondas',10,'cardio','',['3 rondas:','7 power clean','15-20 push up','15 jump squat'],'Barra 40-25');
+M('','AMRAP',10,'cardio','',['6 box jump','6 KB push press','16 lunges (sin peso)','6 KB hang clean','40 mountain climbers','6 KB hang snatch'],'KB 24-16');
+M('','EMOM',10,'fuerza','',['Min 0-4: 18 squat + máx sumo high pull','Min 4-6: descanso','Min 6-10: 15-10 push up + máx power clean'],'Sumo 50-35 · Power clean 60-45');
+M('','AMRAP',6,'mixto','',['7 deadlift','10 gorilla row','12 wall ball'],'Barra 60-45');
+M('','Rondas',17,'mixto','',['3 rondas (TC 17\'):','8 burpee deadlift','14 double row','8 front squat','11-14 push up','8 step','9-14 pull up'],'');
+M('','AMRAP',6,'mixto','',['7 front squat','10 KB swing','13 wall ball'],'');
+M('','AMRAP',6,'mixto','',['7 push press','7 goblet squat','14 KB push up'],'Barra 40-25 · KB 20-12');
+M('','Rondas',15,'cardio','',['3 rondas (TC 15\'):','10 deadlift','10 burpee','30 DU','10 KB thruster','15-20 skull push up'],'Barra 70-55 · KB 40-24');
+M('','Rondas',11,'mixto','',['3 rondas (TC 11\'):','7 deadlift','15-20 push up','7 hang clean','20 mountain climbers','7 front squat'],'2 KB 48-36');
+M('','For Time',9,'gimnastico','',['4 rondas (TC 9\'):','7-10 pull up','20 push up','30 squat'],'');
+M('','Rondas',10,'cardio','',['3 rondas:','9 sumo high pull','10 burpee','14 KB hang snatch'],'');
+M('','For Time',11,'cardio','',['100 m run','20 wall ball','100 m run','30 KB lunges','100 single unders'],'');
+M('','For Time',4,'cardio','',['30 DU','50 wall ball'],'');
+M('','Rondas',8,'cardio','',['3 rondas (8\'):','8 sumo high pull','6 burpee','8 reverse lunges','6 burpee'],'KB 48-32');
+M('','For Time',10,'cardio','',['20 box jump','20 KB clean & press','Descanso 60"','20 alt KB snatch','100 mountain climbers cross'],'Cajón 75/60 cm');
+M('','AMRAP',4,'mixto','',['7 hang clean','10 gorilla row','15 crunch'],'Barra 40-24');
+M('','Rondas',8,'fuerza','',['3 rondas:','60" iso deadlift','12 squat','Descanso','Penalización: burpees si sueltas'],'Barra 70-55');
+M('','For Time',8,'cardio','',['30-40 push up','40 KB swing','40 wall ball'],'KB 20-16 · TC 8\'');
+M('','AMRAP',6,'mixto','',['6 hang squat clean','8 KB push press','14 sit up'],'Barra 50-35 · KB 40-24');
+M('','For Time',6,'cardio','',['30 burpee','Luego 3 rondas: 5 pull up · 10 push up · 15 squat'],'');
+M('EMOM 24','EMOM',24,'fuerza','n',['4\': 8 alt KB snatch + máx bent over','2\' descanso','4\': 10 KB swing + máx hang clean','2\' descanso','4\': 12-15 push up + máx front squat','2\' descanso','4\': 15 jump squat + máx sumo high pull'],'Barra 50-30 · KB 20-12');
+M('','For Time',8,'cardio','',['30 med ball squat','30" descanso','30 KB swing','30" descanso','30 med ball sit up'],'');
+M('','Rondas',10,'mixto','',['3 rondas:','7 hang clean','10 plate ground to overhead','10 ring row','2 med ball clean'],'Barra 40-24 · Disco 20-15');
+M('','For Time',9,'gimnastico','',['5 rondas:','5-7 incline push up','5-7 push up','5-7 decline push up'],'');
+M('','AMRAP',6,'mixto','',['7 push press','7 front squat','20 DU'],'Barra 40-25');
+M('','For Time',12,'cardio','',['15 sumo high pull','20 KB lunges','30 russian swing','20 reverse lunges','60 russian twist'],'');
+M('','AMRAP',20,'cardio','v',['10 step','20 box push up','10 KB hang clean','10 burpee','10 double row','6-10 pull up'],'2 KB 20-12 · chaleco 9-6 kg');
+M('','For Time',8,'cardio','',['1-2-3-4-5-6:','KB hang squat clean','Burpee over KB'],'KB 48-32');
+M('','AMRAP',19,'mixto','v',['10 hang clean','11-14 dips','10 back squat','14 diamond push up','200 m run'],'Barra 50-30 · chaleco');
+M('','Rondas',10,'fuerza','',['3 rondas (TC 10\'):','15 deadlift','20 KB swing','15 bent over'],'Barra 60-45 · KB 24-20');
+M('','EMOM',10,'fuerza','',['Min 0-4: 15 squat + máx KB snatch','Min 4-6: descanso','Min 6-10: 15 push up + máx power clean'],'KB 20/12 · Barra 70/45');
+M('','Rondas',12,'fuerza','',['3 rondas:','Sumo high pull (R1 8×50-30 · R2 6×60-35 · R3 4×70-45)','7-10 pull up','30 DU'],'');
+M('','Rondas',8,'mixto','',['3 rondas:','8 KB hang clean','15 wall ball'],'KB 40-24');
+M('','AMRAP',19,'mixto','v',['7 thruster','20-24 KB push up','10 KB reverse lunges','5-7 burpee pull up','200 m run'],'Barra 40-25 · KB 40-24 · chaleco');
+M('','Rondas',8,'fuerza','',['3 rondas:','5 hang clean & jerk','5-7 chin up'],'Barra 50-30');
+M('','For Time',8,'gimnastico','',['21-15-9:','Dips','Hand release push up'],'');
+M('','Rondas',10,'mixto','',['3 rondas:','7 front squat','11 T2B','7 burpee'],'');
+M('','AMRAP',18,'cardio','v',['7 sumo high pull','3-5 pull up','8 KB hang snatch','7-10 push up','8 KB hang clean','15 squat','Cada 2\': 4 burpee'],'Chaleco 9-6 kg');
+M('','AMRAP',5,'mixto','',['6 box jump','7 deadlift','8 KB clean & jerk'],'KB 20-12');
+M('','Rondas',10,'fuerza','',['3 rondas: 2 bear complex · 4-7 pull up','3 rondas: 6 devil press · 12 alt DB lunges','3 rondas: 5 hang squat clean · 10 double row'],'DB 22-15 · 2 KB');
+M('','For Time',10,'gimnastico','',['20 T2B','30 push up','15 T2B','20 squat','10 T2B','10 pull up'],'');
+M('','AMRAP',17,'mixto','v',['10 box jump','8 floor press','25 box dips','8 push press','12 reverse lunges','19-25 box incline push up'],'40-24 kg · chaleco');
+M('','For Time',10,'cardio','',['20-15-10:','Burpee','KB swing','+ 30 DU'],'');
+M('','Rondas',10,'fuerza','',['3 rondas: 10 push press · 10 front squat (40-25)','3 rondas: 4 clean & jerk (60-40) · 8-11 pull up'],'');
+M('','Rondas',10,'fuerza','',['3 rondas: 7 hang clean · 20-25 push up','3 rondas: 8 zercher · 8 push press · 12 med ball sit up'],'Barra 50-30 / 50-35');
+M('','AMRAP',12,'mixto','v',['AMRAP 7\': 7 deadlift · 12 jump squat · 11-15 ring row','Descanso','AMRAP 5\': 8 box jump · 8 KB thruster · 10 ring dips'],'Chaleco');
+M('','For Time',10,'gimnastico','',['Strict pull up unbroken 10-9-8-…-1','Escalera 1→8: DB snatch + burpee'],'DB 25-17,5');
+M('','AMRAP',16,'mixto','v',['7 hang squat clean','5-8 chin up','10 front KB lift','16-20 diamond push up','5 cluster','20 curl cup'],'Barra 40-25 · KB 20-12 · chaleco 9-6');
+M('','Rondas',12,'fuerza','',['4 rondas: hang squat clean + 12-15 push up','R1 7×60-35 · R2 5×70-45 · R3 3×80-55 · R4 1×90-65'],'');
+M('','Rondas',10,'cardio','',['3 rondas:','12 step up','8 double clean','8 burpee'],'40-24');
+M('','EMOM',10,'gimnastico','',['Impar: 6-10 pull up','Par: 30" hollow hold'],'');
+M('','AMRAP',5,'mixto','',['12 wall ball','9 T2B','6 KB step box'],'KB 48-32');
+M('','AMRAP',13,'mixto','v',['9-12 ring row','6 hang squat clean','12-15 HR push up','8 KB reverse lunges','8 hang squat clean'],'Barra 40-25 · chaleco 9-6');
+M('Atenea','Rondas',15,'fuerza','n',['3 rondas: 10 KB thruster · 10 burpee','3 rondas: 10 front squat · 20-30 push up','3 rondas: 5 squat clean · 10-15 dips'],'KB 40-24 · FS 50-35 · SC 70-45');
+M('','AMRAP',10,'cardio','v',['8 push press','8 KB goblet squat','5-8 pull up','10 KB hang snatch','16 jump squat'],'Barra 40-25 · KB 20-12 · chaleco');
+M('Partner','Rondas',10,'cardio','n',['3 rondas por parejas:','10 KB step','8 burpee'],'KB 40-24');
+M('Kratos','Rondas',20,'mixto','n',['3 rondas:','15 KB floor press','50 DU','10 power clean','20 T2B','8 front squat','50 DU','Luego: 100/75 push up'],'KB 40-24 · Barra 50-30');
+M('Artemisa','Rondas',20,'mixto','n',['3 rondas:','6 hang squat clean','8-12 pull up','20 KB swing','12 alt box step','8 devil press','Luego: 80 reverse lunges'],'Barra 60-40 · KB 24-16');
+M('','Rondas',12,'gimnastico','',['3 rondas (TC 4\' cada una):','7 front squat','7 T2B','7-10 push up'],'Barra 50-35');
+M('','AMRAP',14,'mixto','v',['8 push press','11-15 skull push up','10 box step','15-20 incline push up','8 back squat'],'Barra 40-25 · KB 40-24 · chaleco');
+M('','AMRAP',5,'mixto','',['6 deadlift','8 KB hang clean','20 mountain climbers'],'Barra 70-55');
+M('Sirenas','Rondas',20,'cardio','n',['3 rondas:','15 KB sumo squat','15 KB curl cup','20 jump squat','10 KB push press','9-15 pull up','10 KB hang squat clean','Luego: 100 KB swing (penalización 5 burpee)'],'KB 20-12');
+M('','AMRAP',5,'mixto','',['6 hang clean','8 reverse lunges'],'Barra 40-25 · KB 40-24');
+M('','AMRAP',13,'cardio','v',['10 plate ground to overhead','10 supine row','15 plate plyo jumping jacks','10 zercher','8-10 plate plyo push up','15 plate jumping jacks'],'Disco 20-15 · Barra 50-35 · chaleco');
+M('','Rondas',10,'fuerza','',['3 rondas:','7 hang clean & jerk','7 box jump','7 front squat','7-10 ring row'],'Barra 40-25');
+M('EMOM 22','EMOM',22,'fuerza','n',['4\': 10 alt KB clean + máx bent over','2\' descanso','4\': 10 KB swing + máx sumo high pull','2\' descanso','4\': 15-10 HR push up + máx back squat','2\' descanso','4\': 15 air squat + máx power clean'],'KB 24-16 · Barra 50-30 / 60-35');
+M('','Rondas',10,'mixto','',['3 rondas KB: 7 push press · 7 front squat · 7 double swing · 30" descanso','10-15 pull up','30 T2B'],'2 KB 40-24');
+M('','AMRAP',9,'mixto','v',['8 KB box step','8 KB hang clean & jerk','8-10 skull push up','8 KB goblet squat'],'KB 24-16 · chaleco');
+M('','AMRAP',8,'mixto','',['7 sumo high pull','10 wall ball'],'Barra 50-30');
+M('','AMRAP',13,'cardio','',['100 m run','4 hang clean','7 T2B','100 m run','4 hang squat clean','8 DB push press','Luego: 1 rope climb'],'DB 20-12');
+M('','AMRAP',13,'mixto','v',['6 power clean','9-12 ring row','6 box jump','6 bent over','20 lunges','6 burpee','Luego: 1 milla corriendo'],'Chaleco');
+M('La Hidra de Lerna','AMRAP',16,'mixto','n',['9 power clean','10 alt devil press','8-11 pull up','12 KB goblet squat','13 push up','Luego: complex (bent over + deadlift + squat clean)'],'Barra 50-30');
+M('','AMRAP',5,'mixto','',['8 T2B','5 hang clean'],'Barra 60-40');
+M('','AMRAP',13,'mixto','v',['7 KB thruster','10-14 skull push up','7 KB hang clean','7 burpee broad jump plate','14 reverse lunges','Luego 21-15-9: jump squat · double row · curl cup'],'KB 40-24 · chaleco');
+M('','Rondas',10,'fuerza','',['3 rondas:','7 deadlift','10 hang KB snatch'],'Barra 70-55 · KB 20-12');
+M('Open 26.1','For Time',12,'cardio','n',['20 wall ball','18 box jump over','30 wall ball','18 box jump over','40 wall ball','18 ball box step over','66 wall ball','18 ball box step over','40 · 18 · 30 · 18 · 20 wall ball'],'TC 12\'');
+M('','Rondas',12,'fuerza','',['3 rondas: 7 push press · 7 front squat · 6 burpee','2\' descanso','3 rondas: 7 power clean · 5 front squat · 4 devil press'],'Barra 40-25 / 50-35 · DB 25-15');
+M('','AMRAP',14,'mixto','v',['6 hang squat clean','8-5 pull up','14 gorilla row','8-5 dips','20 plate jumping jacks'],'Barra 50-35 · KB 48-32 · chaleco');
+M('Open 26.2','For Time',15,'gimnastico','n',['24 KB lunges','20 DB snatch','20 pull up','24 KB lunges','20 DB snatch','20 chest to bar','24 KB lunges','20 DB snatch','20 muscle up'],'TC 15\'');
+M('','For Time',10,'fuerza','',['21-15-9:','Hang squat clean','T2B','Box jump'],'Barra 60-40 → 70-45 → 80-55');
+M('KB WOD','Rondas',13,'mixto','nv',['3 rondas (TC 13\'):','10 bent over','4-8 chin up','8 sumo high pull','10 wall ball','6 hang clean jerk','8 burpee'],'KB 40-24 · chaleco');
+M('Open 26.3','For Time',16,'fuerza','n',['2 rondas: 12 burpee over bar · 12 clean · 12 burpee OB · 12 thruster (40-25)','2 rondas igual (50-30)','2 rondas igual (60-35)'],'TC 16\'');
+M('EMOM 22 (II)','EMOM',22,'fuerza','n',['4\': 10 hang KB clean + máx bent over','2\' descanso','4\': 5 burpee + máx sumo high pull','2\' descanso','4\': 9-11 HR push up + máx squat clean','2\' descanso','4\': 15 squat + máx power clean'],'Barra 50-35 / 60-45');
+M('','For Time',15,'cardio','',['21-15-9 (TC 20\'):','Wall ball','KB swing','Box jump','2\' descanso','3 rondas: 8 KB thruster · 8 burpee over KB'],'KB 24-16 / 40-24');
+M('Sierra (Hero)','For Time',30,'mixto','nv',['1 milla corriendo','36 floor press','3 rondas: 27 HR push up · 14 KB hang clean & jerk · 24 pull up'],'KB 40-24 · chaleco 10-7 kg');
+M('Deka WOD','For Time',30,'cardio','n',['500 m run ×2','30 lunges','500 m remo','20 step','30 sit up','200 m carry','20 med ball','500 m run ×2','20 burpee'],'');
+M('','AMRAP',12,'mixto','v',['8 front squat','8 plate ground to overhead','5-8 pull up','10 plate plyo squat','10 plate plyo push up','8 hang clean'],'Barra 40-25 · chaleco');
+M('','Rondas',9,'cardio','',['3 rondas:','7 power clean','9 wall ball','11 KB swing'],'Barra 40-25 · KB 20-16');
+M('','For Time',17,'cardio','',['50-40-30-20-10:','KB russian swing','DU 100-80-60-40-20 (o single unders ×3)'],'TC 17\'');
+M('','AMRAP',9,'fuerza','',['6 bent over','8 deadlift','6 hang clean','20 DU'],'Barra 50-35');
+M('','For Time',15,'gimnastico','',['60 pull up','80 push up','120 squat'],'');
+M('','For Time',6,'fuerza','',['20-15-10 (TC 6\'):','Landmine squat','Russian swing'],'40-25 · KB 24-20');
+M('','Rondas',15,'gimnastico','',['3 rondas:','15 box dips','9 KB deadlift','16-20 ring row','7 KB push press','12-15 box incline push up','5 ring dips','10 burpee'],'');
+M('','AMRAP',6,'cardio','',['7 sumo high pull','9 wall ball','11 KB swing','13 sit up'],'');
+M('Complex máx','AMRAP',10,'fuerza','n',['Busca tu máximo de complex:','2 deadlift','1 hang clean','2 bent over','4-6 pull up'],'');
+M('','AMRAP',15,'fuerza','v',['6 push press','6 back squat','2 Cindy','6 push jerk','6 front squat','2 Cindy'],'Barra 40-25 · chaleco · Cindy = 5 pull up + 10 push up + 15 squat');
+M('','Rondas',10,'cardio','',['3 rondas:','12 step alterno','8 double hang clean','8 burpee'],'KB 40-24');
+M('','Rondas',12,'mixto','',['3 rondas KB:','7 deadlift','16-20 push up','7 hang clean','40 mountain climbers','7 front squat'],'');
+M('','AMRAP',12,'cardio','',['7 hang clean & jerk','12 squat','14 KB swing','12 jump squat','4-8 pull up','10 lunges','10-14 diamond push up','10 jumping lunges'],'Barra 40-25 · KB 20-16');
+M('','AMRAP',5,'fuerza','',['9 deadlift','8 DB alt snatch'],'Barra 60-45 (4 rondas)');
+M('','For Time',11,'cardio','',['200 m run','20 wall ball','200 m run','30 KB lunges','200 m run','100 DU'],'TC 11\'');
+M('','For Time',20,'cardio','',['25 reverse lunges','25 med ball sit up','20 box step over','20 med ball','200 m carry','200 m run entre ejercicios'],'Balón 50-30');
+M('','For Time',5,'cardio','',['KB hang squat clean 1-2-3-4-5-6','Burpee overhead 6-5-4-3-2-1'],'KB 40-24');
+M('','Rondas',10,'gimnastico','',['3 rondas: 1× curl 21 · 15 T2B · 6-9 pull up','3 rondas: 5 power clean · 7 goblet squat · 6-9 dips'],'');
+M('','AMRAP',12,'mixto','',['10 sumo squat déficit','7-10 plyo push up','8 hang clean','15 squat','8 push press','4-6 chin up'],'2 KB 40-24');
+M('','For Time',12,'cardio','',['600 m run','20 box step','20 med ball sit up','20 DB burpee'],'');
+M('','Rondas',8,'mixto','',['3 rondas:','16 KB thruster','6-10 pull up'],'KB 40-24');
+M('','AMRAP',10,'mixto','',['6 power clean','5 pull up','6 front squat','10 push up','10 supine row','15 squat'],'Barra 40-25');
+M('','Rondas',10,'mixto','',['3 rondas: 8 T2B · 14 alt KB snatch','3 rondas: 8 deadlift · 10 wall ball · 12 KB swing'],'Barra 60-45');
+M('','AMRAP',12,'gimnastico','v',['7-10 push up','6 push press','7-10 HR push up','6 back squat','7-10 diamond push up','6 hang clean','7-10 skull push up','10 ring row'],'Barra 40-25 · chaleco 9-6');
+M('Aniversario','Rondas',15,'fuerza','n',['2-4… hasta 12 …4-2: KB goblet squat + push up','AMRAP 3\': 10 russian swing · 10 sit up','3 rondas: squat clean + 14 KB hang clean','R1 5×70-45 · R2 3×80-55 · R3 1×90-65'],'KB 24-16');
+M('','AMRAP',7,'mixto','',['7 power clean','7-10 HR push up','10 KB hang snatch','5-7 pull up'],'Barra 50-35 · KB 20-12');
+M('KB WOD (II)','AMRAP',13,'cardio','nv',['8 sumo high pull','10 jump squat','8 hang clean','20 alt lunges','10 step','6-9 pull up'],'KB 48-32 · chaleco');
+M('','AMRAP',11,'mixto','v',['6 power clean','6-10 push up','8 KB goblet squat','6 T2B','8 KB alt snatch','10 KB reverse lunges'],'Chaleco 9-6 kg');
+M('','For Time',12,'gimnastico','',['21 pull up · 40 DU · 21 thruster','18 chin up · 35 DU · 18 thruster','30 ring row · 30 DU · 15 thruster'],'Barra 40-25');
+M('','For Time',15,'gimnastico','',['25 pull up','20 hang clean','15 burpee pull up','20 deadlift','5 muscle up'],'Barra 50-35 / 60-45');
+M('','AMRAP',12,'mixto','v',['6 power clean','6-10 dips','8 back squat','10-12 diamond push up','200 m run'],'Barra 40-25 · chaleco 9-6');
+M('300 Leónidas','For Time',30,'mixto','n',['25 pull up','50 deadlift','50 HR push up','50 box jump','50 alt KB clean & jerk','50 KB alt lunges','25 pull up'],'KB 24-16 · Barra 60-45');
+M('','AMRAP',11,'mixto','',['6-9 pull up','10 KB hang clean','10 KB box step','10 KB push press','16 decline push up','16 KB reverse lunges'],'KB 24-16');
+M('','Rondas',10,'fuerza','',['3 rondas:','7 hang clean','10 squat','5-7 pull up'],'Barra 50-35');
+M('','Rondas',10,'cardio','',['3 rondas:','20 alt hang DB snatch','15 wall ball','10 sumo high pull'],'DB 20-12 · Barra 40-25');
+M('','AMRAP',20,'cardio','',['5-8 pull up','10 DB hang clean & jerk','200 m run','10 box jump','14-20 incline push up','200 m run','14 DB lunges','10-14 decline push up','200 m run'],'');
+M('','AMRAP',20,'cardio','',['10 KB hang clean','20 KB reverse lunges','200 m run','10 med ball sit up','8 burpee','200 m run','16 box step over','20 box dips','200 m run'],'');
+M('Hang power clean escalonado','EMOM',12,'fuerza','',['3 hang power clean cada minuto','Sube peso cada 4\': 60-35 → 70-45 → 80-55'],'');
+M('','For Time',10,'fuerza','',['Power clean 6-4-2-1 + 1 ronda de Cindy tras cada serie','6×60-35 · 4×70-45 · 2×80-55 · 1×90-65'],'');
+M('','For Time',8,'cardio','',['20-16-12:','Alt KB step','KB push press'],'KB 24-16');
+M('','AMRAP',18,'cardio','',['200 m run','6 deadlift','10 alt gorilla row','10 alt KB lunges','200 m run','3-5 pull up','10 KB hang clean','10 jumping lunges'],'KB 40-24');
+M('','AMRAP',5,'fuerza','',['5 power clean','5 front squat','5 burpee','Luego 3 rondas: 10 KB clean · 20 KB split squat'],'5 rondas');
+M('','Rondas',10,'mixto','',['3 rondas: 6 clean & press (50-30) · 8 T2B · 8-10 skull push up','2\' descanso','3 rondas: 6 devil press (22-17) · 16 sit up'],'');
+M('The 7 push up','For Time',12,'gimnastico','n',['7 rondas:','7 decline push up','7 push up','7 incline push up','30" descanso'],'TC 12\'');
+M('','For Time',12,'mixto','',['20-15-10: pull up · goblet squat','3 rondas (TC 8\'): 1 bear complex · 5 burpee · 30 DU'],'Barra 60-40');
+M('','For Time',8,'mixto','',['KB hang squat clean 2-4-6-8-10-12','HR push up 12-10-8-6-4-2'],'TC 8\'');
+M('','Rondas',3,'fuerza','',['3 rondas (TC 3\'):','8 deadlift','6 burpee'],'Barra 70-55');
+M('','Rondas',9,'mixto','',['3 rondas:','6 bent over','8 KB swing','10 ring row'],'Barra 50-30 · KB 20-16');
+M('','Rondas',10,'fuerza','',['3 rondas: power clean + 4-7 pull up','R1 10×50-30 · R2 7×60-35 · R3 5×70-45'],'');
+M('','For Time',8,'cardio','',['30 box step','30 med ball sit up','30 reverse lunges'],'');
+M('','Rondas',12,'mixto','',['3 rondas (TC 12\'):','8 KB hang cluster','12-16 HR push up','16 KB gorilla row','16 sit up','32 box dips'],'KB 40-24');
+M('','AMRAP',30,'cardio','',['200 m run','10 KB clean','20 box step','200 m run','20 KB reverse lunges','20 wall ball','200 m run','4 med ball clean','90" KB iso deadlift'],'~3 rondas');
+M('','Rondas',12,'fuerza','',['6 rondas:','Complex: 1 deadlift + 1 power clean + 1 squat clean','6 devil press','7-10 pull up'],'Barra 2×50-30 · 2×60-35 · 2×70-45');
+M('','For Time',6,'cardio','',['20 wall ball','40 mountain climbers','30 DU'],'');
+M('','AMRAP',16,'mixto','',['9 deadlift','12 sit up','9 KB hang clean','10-12 ring row','200 m run'],'Barra 60-45 · KB 40-24');
+M('','For Time',8,'gimnastico','',['20-15-10:','Pull up','Push up','Squat'],'');
+M('','Rondas',10,'mixto','',['3 rondas:','8 deadlift','16 gorilla row','32 sit up'],'Barra 60-45 · KB 48-32');
+M('','AMRAP',14,'mixto','',['16 KB step','20 crunch','10 KB double hang clean','12 T2B','10 KB double row','14-20 KB deficit push up','32 mountain climbers'],'~3 rondas');
+M('','AMRAP',12,'fuerza','',['7-10 pull up','3 squat clean','10 wall ball'],'Barra 70-45');
+M('','AMRAP',9,'mixto','',['6 box jump','10 KB shoulder press','6-8 pull up','10 alt KB row','12 skull push up'],'KB 24-16');
+M('','AMRAP',14,'gimnastico','',['Escalera 2-4-6-8-10…:','Pull up','T2B','Devil press','DB hang squat clean'],'DB 22,5-15');
 /* Core */
-M('','04-08-25','Rondas',8,'core','',['3 rondas:','30 crunch','10 alt KB snatch'],'');
-M('','09-09-25','Rondas',6,'core','',['3 rondas:','5-3 pull up','20 crunch','40 twist'],'');
-M('','01-10-25','Rondas',6,'core','',['3 rondas:','30 crunch','20 bent leg'],'');
-M('','20-10-25','For Time',7,'core','',['3 rondas (TC 7\'):','12 curl cup','10 T2B'],'');
-M('','19-11-25','Rondas',6,'core','',['3 rondas:','10 med ball sit up','20 plank jacks','15 bent leg'],'');
-M('','25-11-25','Rondas',6,'core','',['3 rondas:','20 crunch','15 bent leg','10 ring side plank'],'');
-M('','03-12-25','Rondas',6,'core','',['3 rondas:','20 crunch','20 alt iso V-ups','20 hollow rock'],'');
-M('Plate abs','11-02-26','Rondas',6,'core','',['3 rondas:','20 crunch','15 leg lifts','30 twist'],'Con disco');
-M('','18-02-26','Rondas',6,'core','',['3 rondas:','15 double crunch','10 V-ups','20" V-iso'],'');
-M('','25-02-26','Rondas',6,'core','',['3 rondas:','20 tuck crunch','14 alt V-ups','20 plank rotation'],'');
-M('','04-03-26','Rondas',6,'core','',['3 rondas:','15 crunch','14 leg raise','10 hollow'],'');
-M('','22-04-26','Rondas',6,'core','',['3 rondas:','20 plate crunch','10 T2B','40 oblique heel touch'],'');
-M('','12-05-26','AMRAP',4,'core','',['20 crunch','15 leg lifts','10 alt hang DB snatch'],'');
-M('','08-26','Rondas',7,'core','',['3 rondas (TC 7\'):','7 T2B','12 tuck crunch','8 double KB hang clean'],'');
-M('','21-10-26','Rondas',6,'core','',['3 rondas:','12 plate sit up','12 plate leg lift','30 twist'],'');
+M('','Rondas',8,'core','',['3 rondas:','30 crunch','10 alt KB snatch'],'');
+M('','Rondas',6,'core','',['3 rondas:','5-3 pull up','20 crunch','40 twist'],'');
+M('','Rondas',6,'core','',['3 rondas:','30 crunch','20 bent leg'],'');
+M('','For Time',7,'core','',['3 rondas (TC 7\'):','12 curl cup','10 T2B'],'');
+M('','Rondas',6,'core','',['3 rondas:','10 med ball sit up','20 plank jacks','15 bent leg'],'');
+M('','Rondas',6,'core','',['3 rondas:','20 crunch','15 bent leg','10 ring side plank'],'');
+M('','Rondas',6,'core','',['3 rondas:','20 crunch','20 alt iso V-ups','20 hollow rock'],'');
+M('Plate abs','Rondas',6,'core','',['3 rondas:','20 crunch','15 leg lifts','30 twist'],'Con disco');
+M('','Rondas',6,'core','',['3 rondas:','15 double crunch','10 V-ups','20" V-iso'],'');
+M('','Rondas',6,'core','',['3 rondas:','20 tuck crunch','14 alt V-ups','20 plank rotation'],'');
+M('','Rondas',6,'core','',['3 rondas:','15 crunch','14 leg raise','10 hollow'],'');
+M('','Rondas',6,'core','',['3 rondas:','20 plate crunch','10 T2B','40 oblique heel touch'],'');
+M('','AMRAP',4,'core','',['20 crunch','15 leg lifts','10 alt hang DB snatch'],'');
+M('','Rondas',7,'core','',['3 rondas (TC 7\'):','7 T2B','12 tuck crunch','8 double KB hang clean'],'');
+M('','Rondas',6,'core','',['3 rondas:','12 plate sit up','12 plate leg lift','30 twist'],'');
 
 function tagW(w){
   const t=w.lines.join(' ').toLowerCase();
@@ -622,7 +648,7 @@ function plates(sc){
   const out=[];sc.sets.forEach(([s,r,p])=>{for(let k=0;k<s&&out.length<8;k++)out.push(p)});
   return '<span class="barbell" aria-hidden="true">'+out.map(p=>{const c=p<70?'g':p<80?'y':p<90?'b':'r';const hgt=Math.round(12+(Math.min(p,102)-50)*0.5);return `<i class="plate ${c}" style="height:${hgt}px"></i>`}).join('')+'</span>';
 }
-const heavyStrength=()=>st.fuerza.some(f=>['Cargada','Complex','Bisagra'].includes(f.g));
+const heavyStrength=()=>st.fuerza.some(f=>['Cargada','Complex','Peso muerto'].includes(f.g));
 
 /* ---------- vistas ---------- */
 function vFuerza(){
@@ -636,7 +662,7 @@ function vFuerza(){
       <label class="rm" for="rm-${it.id}">Tu RM <input id="rm-${it.id}" inputmode="decimal" data-rm="${it.id}" value="${esc(st.rm[it.id]||'')}" placeholder="kg"></label></div>
       <p class="desc">${esc(it.d)}</p><div class="schemes">${sch}</div></article>`}).join('');
   return `<h2>¿Qué quieres de fuerza?</h2>
-  <p class="hint">Elige grupo y luego un esquema del cuaderno. Puedes juntar dos levantamientos, como hace el box (por ejemplo, sentadilla + dips). Si pones tu RM, calcula los kilos.</p>
+  <p class="hint">Elige grupo y luego un esquema. Puedes juntar dos levantamientos, como hace el box (por ejemplo, sentadilla + dips). Si pones tu RM, calcula los kilos.</p>
   <div class="legend"><span><i style="background:var(--p-green)"></i>&lt;70%</span><span><i style="background:var(--p-yellow)"></i>70-79%</span><span><i style="background:var(--p-blue)"></i>80-89%</span><span><i style="background:var(--p-red)"></i>90%+</span><span>Un disco por serie</span></div>
   <div class="chips">${grps}</div><div class="list">${cards}</div>`;
 }
@@ -644,7 +670,7 @@ function vAcc(){
   const zs=['Todos',...new Set(ACC.map(a=>a.z))];
   const list=ACC.map((a,i)=>({...a,i})).filter(a=>st.accZ==='Todos'||a.z===st.accZ);
   return `<h2>Superserie de accesorio</h2>
-  <p class="hint">Opcional. Son las superseries que salen en tu cuaderno. Añade alguna de pierna o core de vez en cuando: es lo que menos se trabaja en el box.</p>
+  <p class="hint">Opcional. Añade alguna de pierna o core de vez en cuando: es lo que menos se trabaja en el box.</p>
   <div class="chips">${zs.map(z=>`<button class="chip" aria-pressed="${st.accZ===z}" data-accz="${z}">${z}</button>`).join('')}</div>
   <div class="list">${list.map(a=>`<article class="sheet acc ${st.acc===a.i?'on':''}"><div class="accRow"><div><h3>${esc(a.n)}</h3><div class="meta"><span class="pill">${a.z}</span><span class="pill">${esc(a.r)}</span></div></div>
    <button class="btn pick ${st.acc===a.i?'solid':''}" data-acc="${a.i}">${st.acc===a.i?'Quitar':'Elegir'}</button></div></article>`).join('')}</div>`;
@@ -655,14 +681,14 @@ function filtered(){
     &&(st.fmt==='todos'||w.fmt===st.fmt)
     &&(st.dur==='todos'||(st.dur==='c'&&w.min<=8)||(st.dur==='m'&&w.min>8&&w.min<=15)||(st.dur==='l'&&w.min>15))
     &&(!st.chal||w.v)&&(!st.named||w.named)&&(!st.pizOnly||w.piz)
-    &&(!q||(w.n+' '+w.lines.join(' ')+' '+w.rx+' '+w.f).toLowerCase().includes(q)));
+    &&(!q||(w.n+' '+w.lines.join(' ')+' '+w.rx).toLowerCase().includes(q)));
 }
 function wodCard(w,inSession){
   const on=st.wods.includes(w.id);
-  const warn=heavyStrength()&&w.hinge&&w.cat!=='core'?'<span class="pill warn">Más bisagra hoy</span>':'';
+  const warn=heavyStrength()&&w.hinge&&w.cat!=='core'?'<span class="pill warn">Más peso muerto hoy</span>':'';
   return `<article class="sheet wod ${w.cat} ${on&&!inSession?'on':''}">
    <div class="wodTop"><div><h3>${esc(w.n)}</h3>
-   <div class="meta"><span class="pill cat">${CATS[w.cat]}</span>${w.piz?'<span class="pill pz">Pizarra</span>':''}${w.v?'<span class="pill">Chaleco</span>':''}<span class="pill">${esc(w.f)}</span>${warn}</div></div>
+   <div class="meta"><span class="pill cat">${CATS[w.cat]}</span>${w.piz?'<span class="pill pz">Pizarra</span>':''}${w.v?'<span class="pill">Chaleco</span>':''}${warn}</div></div>
    <div class="dur"><b>${w.min}'</b><span>${w.fmt}</span></div></div>
    ${w.fuerza?`<div class="pzF"><b>Fuerza de ese día</b>${esc(w.fuerza)}</div>`:''}
    ${w.acc?`<div class="pzF"><b>Superserie de ese día</b>${esc(w.acc)}</div>`:''}
@@ -684,14 +710,14 @@ function vWod(){
    <button class="chip" aria-pressed="${st.pizOnly}" data-tog="pizOnly">De la pizarra (${W.filter(w=>w.piz).length})</button></div>
   <div class="toolbar"><input class="search" id="q" type="search" placeholder="Buscar: wall ball, Kratos, DU…" value="${esc(st.q)}">
    <button class="btn" id="rndWod" type="button" ${list.length?'':'disabled'}>Uno al azar</button></div>
-  <p class="count">${list.length} WODs${heavyStrength()?' · Como tu fuerza ya carga la bisagra, verás marcados los que repiten peso muerto, clean o swing.':''}</p>
+  <p class="count">${list.length} WODs${heavyStrength()?' · Como tu fuerza ya carga peso muerto o clean, verás marcados los WODs que repiten peso muerto, clean o swing.':''}</p>
   <div class="list">${list.map(w=>wodCard(w)).join('')||'<p class="empty">Ningún WOD con estos filtros. Quita alguno.</p>'}</div>`;
 }
 function sessionText(){
   const L=[];L.push('MI SESIÓN');
   if(st.fuerza.length){L.push('','FUERZA');st.fuerza.forEach(f=>{const it=allLifts().find(x=>x.id===f.id);const sc=it.sch[f.i];L.push('* '+it.n+': '+setsTxt(it,sc).replace(/<[^>]+>/g,''))})}
   if(st.acc!==null){const a=ACC[st.acc];L.push('','SUPERSERIE',a.n+' ('+a.r+')')}
-  st.wods.forEach(id=>{const w=W.find(x=>x.id===id);L.push('',w.n.toUpperCase()+' · '+w.fmt+' '+w.min+'\' ('+w.f+')',...w.lines);if(w.rx)L.push('Rx: '+w.rx)});
+  st.wods.forEach(id=>{const w=W.find(x=>x.id===id);L.push('',w.n.toUpperCase()+' · '+w.fmt+' '+w.min+'\'',...w.lines);if(w.rx)L.push('Rx: '+w.rx)});
   return L.join('\n');
 }
 function vSesion(){
@@ -709,7 +735,7 @@ function vSesion(){
    <section class="sheet block"><h3><b>1</b>Fuerza</h3>${fz}${st.pizF?`<div class="row"><div><b>De la pizarra</b><div class="sets" style="white-space:pre-line">${esc(st.pizF)}</div></div><button class="x" data-rmpiz="1">Quitar</button></div>`:''}${fz||st.pizF?'':'<p class="empty">Sin fuerza elegida.</p>'}</section>
    <section class="sheet block"><h3><b>2</b>Superserie</h3>${a?`<div class="row"><div><b>${esc(a.n)}</b><div class="sets">${esc(a.r)}</div></div><button class="x" data-rmacc="1">Quitar</button></div>`:''}${st.pizAcc?(()=>{const p=accFromText(st.pizAcc);return `<div class="row"><div><b>${esc(p.n)}</b><div class="sets">${esc(p.r||'De la pizarra')}</div></div><button class="x" data-rmpacc="1">Quitar</button></div>`})():''}${a||st.pizAcc?'':'<p class="empty">Sin accesorio.</p>'}</section>
    <section class="block"><h3><b>3</b>WOD</h3>${ws.length?ws.map(w=>wodCard(w,true)+`<button class="x" data-wod="${w.id}">Quitar este WOD</button>`).join(''):'<p class="empty">Sin WOD elegido.</p>'}</section>
-   ${warn?'<p class="note">La fuerza de hoy ya carga la bisagra (clean, complex o peso muerto) y el WOD vuelve a tener peso muerto, clean o swing. Baja algo el peso del WOD o cambia a uno de gimnásticos o motor.</p>':''}
+   ${warn?'<p class="note">La fuerza de hoy ya carga peso muerto (clean, complex o deadlift) y el WOD vuelve a tener peso muerto, clean o swing. Baja algo el peso del WOD o cambia a uno de gimnásticos o motor.</p>':''}
    ${empty?'':`<div class="toolbar"><button class="btn solid" id="logStart" type="button">Registrar entreno</button><button class="btn" id="copy" type="button">Copiar sesión</button><button class="btn" id="reset" type="button">Empezar de nuevo</button><span class="count" id="copyMsg"></span></div>
    <textarea id="txt" readonly hidden></textarea>`}
   </div>`;
@@ -846,8 +872,6 @@ window.onPizarra=function(o){
   try{if(window.Android&&Android.takePending)Android.takePending()}catch(e){}
   const p=parsePizarra(o);
   st.piz.fuerza=p.fuerza;st.piz.wod=p.wod;st.piz.acc=p.acc||'';
-  const dm=(p.name||'').match(/(\d{1,2})\s*[-\/.]\s*(\d{1,2})\s*[-\/.]\s*(\d{2,4})/);
-  if(dm){const y=dm[3].length===2?'20'+dm[3]:dm[3];st.piz.fecha=y+'-'+dm[2].padStart(2,'0')+'-'+dm[1].padStart(2,'0')}
   const n=(o.lines||[]).length;
   st.piz.status=n?`Leídas ${n} líneas. Revisa y corrige lo que haga falta.`:'No he encontrado texto. Prueba otra foto más de frente y con más luz.';st.piz.err=!n;
   st.tab='pizarra';render();window.scrollTo(0,0);
@@ -855,7 +879,6 @@ window.onPizarra=function(o){
 window.onPizarraError=function(m){st.piz.status=m==='cancel'?'':m;st.piz.err=m!=='cancel';if(st.tab==='pizarra')render()};
 function vPizarra(){
   const app=!!(window.Android&&Android.pickPhoto);
-  if(!st.piz.fecha)st.piz.fecha=today();
   const meta=st.piz.wod.trim()?wodMeta(st.piz.wod):null;
   const lifts=pizLifts(st.piz.fuerza);
   return `<h2>Pizarra del día</h2>
@@ -865,9 +888,7 @@ function vPizarra(){
   <p class="tip">Para que lea bien: foto de frente, sin reflejos, con toda la pizarra dentro y buena luz. Las mayúsculas claras se leen mejor.</p>
   <p class="status ${st.piz.err?'err':''}" id="pzStatus">${esc(st.piz.status)}</p>
   <div class="form">
-   <div class="two" style="grid-template-columns:1fr 150px">
-    <label class="lbl" for="pzN">Nombre (opcional)<input class="field" id="pzN" value="${esc(st.piz.name)}" placeholder="Ej.: Kratos, WOD del lunes"></label>
-    <label class="lbl" for="pzD">Fecha<input class="field" type="date" id="pzD" value="${esc(st.piz.fecha)}"></label></div>
+   <label class="lbl" for="pzN">Nombre (opcional)<input class="field" id="pzN" value="${esc(st.piz.name)}" placeholder="Ej.: Kratos, WOD del lunes"></label>
    <label class="lbl" for="pzF">Fuerza<textarea class="field" id="pzF" style="min-height:${Math.max(120,(st.piz.fuerza.split('\n').length+1)*23)}px" placeholder="Ej.:
 SQUAT CLEAN 5×2 85%
 DIPS 5×5 77%">${esc(st.piz.fuerza)}</textarea></label>
@@ -889,9 +910,8 @@ function savePizarra(){
   const rx=lines.filter(l=>/^rx\b/i.test(l)).map(l=>l.replace(/^rx\s*:?\s*/i,'')).join(' · ');
   const body=lines.filter(l=>!/^rx\b/i.test(l));
   if(!body.length)return null;
-  const meta=wodMeta(st.piz.wod);const d=st.piz.fecha||today();
-  const f=d.split('-').reverse().map((x,i)=>i===2?x.slice(2):x).join('-');
-  const c={id:'c'+Date.now(),n:st.piz.name.trim()||'Pizarra '+f,f,fmt:meta.fmt,min:meta.min,cat:meta.cat,v:meta.v,named:!!st.piz.name.trim(),lines:body,rx,piz:true,fuerza:st.piz.fuerza.trim(),acc:st.piz.acc.trim()};
+  const meta=wodMeta(st.piz.wod);
+  const c={id:'c'+Date.now(),n:st.piz.name.trim()||'Pizarra '+(st.custom.filter(x=>x.piz).length+1),fmt:meta.fmt,min:meta.min,cat:meta.cat,v:meta.v,named:!!st.piz.name.trim(),lines:body,rx,piz:true,fuerza:st.piz.fuerza.trim(),acc:st.piz.acc.trim()};
   st.custom.unshift(c);saveCustom();W.unshift(tagW({...c}));return c;
 }
 function expand(sc){
@@ -913,7 +933,7 @@ function vRegistrar(){
   const a=st.acc!==null?ACC[st.acc]:(st.pizAcc?accFromText(st.pizAcc):null);
   const acc=a?`<section class="sheet"><h3>${esc(a.n)}</h3><p class="desc">${esc(a.r)}</p><label class="lbl" for="lgAcc">Kg usados o notas<input class="field" id="lgAcc" placeholder="Ej.: hammer 14 kg, extensión 20 kg"></label></section>`:'';
   const ws=st.wods.map((id,i)=>{const w=W.find(x=>x.id===id);
-    return `<section class="sheet wod ${w.cat}"><h3>${esc(w.n)}</h3><p class="desc">${w.fmt} ${w.min}' · ${esc(w.f)}</p>
+    return `<section class="sheet wod ${w.cat}"><h3>${esc(w.n)}</h3><p class="desc">${w.fmt} ${w.min}'</p>
      <div class="form"><div class="two"><label class="lbl" for="w${i}res">Resultado<input class="field" id="w${i}res" placeholder="${w.fmt==='AMRAP'?'Rondas + reps (ej. 5+12)':w.fmt==='For Time'?'Tiempo (ej. 11:32)':'Tiempo o rondas'}"></label>
      <label class="lbl" for="w${i}rx">Peso<select class="field" id="w${i}rx"><option>Rx</option><option>Escalado</option></select></label></div>
      <label class="lbl" for="w${i}nota">Pesos usados / notas<input class="field" id="w${i}nota" placeholder="${w.rx?esc('Rx: '+w.rx):'Ej.: KB 20 kg'}"></label></div></section>`}).join('');
@@ -955,7 +975,7 @@ function saveEntry(){
       const rm=num(st.rm[id]);
       return {id,n,esquema:f.esquema,fase:f.fase,rm,sets:f.rows.map((r,j)=>({serie:j+1,reps:num(val('f'+k+'r'+j)),pct:r.pct,prev:r.pct&&rm?kg(rm,r.pct):null,kg:num(val('f'+k+'k'+j))}))}}),
     acc:st.acc!==null?{n:ACC[st.acc].n,r:ACC[st.acc].r,nota:val('lgAcc')}:(st.pizAcc?{...accFromText(st.pizAcc),nota:val('lgAcc')}:null),
-    wods:st.wods.map((id,i)=>{const w=W.find(x=>x.id===id);return {n:w.n,f:w.f,cat:CATS[w.cat],fmt:w.fmt,min:w.min,res:val('w'+i+'res'),rx:val('w'+i+'rx'),nota:val('w'+i+'nota')}})};
+    wods:st.wods.map((id,i)=>{const w=W.find(x=>x.id===id);return {n:w.n,cat:CATS[w.cat],fmt:w.fmt,min:w.min,res:val('w'+i+'res'),rx:val('w'+i+'rx'),nota:val('w'+i+'nota')}})};
   st.log.push(e);saveLog();st.flash='Entreno guardado.';st.tab='hist';
 }
 function exportXlsx(){
@@ -965,8 +985,8 @@ function exportXlsx(){
   L.forEach(e=>e.fuerza.forEach(f=>f.sets.forEach(s=>series.push([e.fecha,isoWeek(e.fecha),f.n,f.esquema,f.fase,s.serie,s.reps,s.pct?s.pct/100:null,s.prev,s.kg,f.rm]))));
   const prog={};L.forEach(e=>e.fuerza.forEach(f=>f.sets.forEach(s=>{const k=isoWeek(e.fecha)+'|'+f.n;const p=prog[k]||(prog[k]={w:isoWeek(e.fecha),n:f.n,best:0,sets:0,vol:0});p.sets++;if(s.kg){p.best=Math.max(p.best,s.kg);p.vol+=s.kg*(s.reps||0)}})));
   const progreso=[['Semana','Ejercicio','Mejor kg','Series','Volumen (kg×reps)']].concat(Object.values(prog).map(p=>[p.w,p.n,p.best||null,p.sets,p.vol||null]));
-  const wods=[['Fecha','Semana','WOD','Tipo','Formato','Min','Resultado','Rx / Escalado','Pesos y notas','Fecha original del cuaderno']];
-  L.forEach(e=>e.wods.forEach(w=>wods.push([e.fecha,isoWeek(e.fecha),w.n,w.cat,w.fmt,w.min,w.res,w.rx,w.nota,w.f])));
+  const wods=[['Fecha','Semana','WOD','Tipo','Formato','Min','Resultado','Rx / Escalado','Pesos y notas']];
+  L.forEach(e=>e.wods.forEach(w=>wods.push([e.fecha,isoWeek(e.fecha),w.n,w.cat,w.fmt,w.min,w.res,w.rx,w.nota])));
   const acc=[['Fecha','Superserie','Series / reps','Kg y notas']];L.forEach(e=>{if(e.acc)acc.push([e.fecha,e.acc.n,e.acc.r,e.acc.nota])});
   const ses=[['Fecha','Semana','Fuerza','WOD','Notas']];L.forEach(e=>ses.push([e.fecha,isoWeek(e.fecha),e.fuerza.map(f=>f.n).join(' + '),e.wods.map(w=>w.n).join(' + '),e.notas]));
   const rmh=[['Fecha','Ejercicio','RM (kg)']].concat([...st.rmh].sort((a,b)=>a.d.localeCompare(b.d)).map(r=>[r.d,r.n,r.kg]));
@@ -976,7 +996,7 @@ function exportXlsx(){
     if(pctCol!=null)for(let r=1;r<rows.length;r++){const c=ws[XLSX.utils.encode_cell({r,c:pctCol})];if(c&&c.t==='n')c.z='0%'}
     XLSX.utils.book_append_sheet(wb,ws,name)};
   add('Sesiones',ses,[11,10,30,36,40]);add('Series',series,[11,10,18,30,11,6,6,7,11,9,10],7);add('Progreso semanal',progreso,[10,18,10,8,16]);
-  add('WODs',wods,[11,10,28,18,10,6,14,12,30,12]);add('Superseries',acc,[11,44,14,30]);add('Historial RM',rmh,[11,18,9]);add('RM actuales',rmAct,[18,14]);
+  add('WODs',wods,[11,10,28,18,10,6,14,12,30]);add('Superseries',acc,[11,44,14,30]);add('Historial RM',rmh,[11,18,9]);add('RM actuales',rmAct,[18,14]);
   const name='Hemeroteca_'+today()+'.xlsx';
   try{
     if(window.Android&&Android.saveFile){Android.saveFile(name,XLSX.write(wb,{bookType:'xlsx',type:'base64'}),'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');st.flash='Excel creado: '+name}
@@ -1065,11 +1085,11 @@ function randomAll(){
   const pick=a=>a[Math.floor(Math.random()*a.length)];
   const lifts=allLifts();
   const a=pick(lifts);
-  const pair={Pierna:['dip','pu'],Cargada:['pu','dip'],Complex:['pu','dip'],Bisagra:['pu'],Tirón:['dip','bsq'],Empuje:['bsq','fsq']}[a.g];
+  const pair={Pierna:['dip','pu'],Cargada:['pu','dip'],Complex:['pu','dip'],'Peso muerto':['pu'],Tirón:['dip','bsq'],Empuje:['bsq','fsq']}[a.g];
   const b=lifts.find(x=>x.id===pick(pair));
   st.fuerza=[{id:a.id,i:Math.floor(Math.random()*a.sch.length),g:a.g},{id:b.id,i:Math.floor(Math.random()*b.sch.length),g:b.g}];
   st.acc=Math.floor(Math.random()*ACC.length);
-  const heavy=['Cargada','Complex','Bisagra'].includes(a.g);
+  const heavy=['Cargada','Complex','Peso muerto'].includes(a.g);
   const main=W.filter(w=>w.cat!=='core'&&(!heavy||!w.hinge));
   st.wods=[pick(main.length?main:W).id,pick(W.filter(w=>w.cat==='core')).id];
   st.tab='sesion';
